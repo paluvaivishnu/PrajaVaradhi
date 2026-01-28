@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>PrajaVaradhi | Dashboard</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f3f6fb;
+        }
+
+        /* HEADER */
+        .header {
+            padding: 18px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: white;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .logo-box {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: 900;
+            color: #0f2a44;
+        }
+
+        .site-logo {
+            width: 30px;
+            height: 30px;
+            object-fit: contain;
+        }
+
+        .logout {
+            background: #d62828;
+            color: white;
+            padding: 8px 14px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        /* HERO */
+        .hero {
+            background: #0f2a44;
+            color: white;
+            padding: 60px 40px;
+            text-align: center;
+        }
+
+        .hero h2 {
+            font-size: 38px;
+        }
+
+        /* SERVICES GRID */
+        .services {
+            max-width: 1100px;
+            margin: -40px auto 80px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 25px;
+            padding: 0 40px;
+        }
+
+        .service-card {
+            background: white;
+            border: 2px solid #0f2a44;
+            border-radius: 12px;
+            padding: 28px;
+            text-align: center;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .service-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, .15);
+        }
+
+        .service-card h3 {
+            color: #0f2a44;
+            margin-bottom: 10px;
+        }
+
+        .service-card p {
+            color: #444;
+        }
+
+        /* FOOTER */
+        .footer {
+            background: #0f2a44;
+            color: white;
+            padding: 35px;
+            text-align: center;
+            margin-top: 60px;
+        }
+    </style>
+    <!-- Include API and Auth JavaScript files -->
+    <script src="js/api.js"></script>
+    <script src="js/auth.js"></script>
+
+    <script>
+        // Check if user is logged in
+        if (!Utils.isLoggedIn()) {
+            window.location.href = "login.html";
+        }
+
+        // Logout function
+        function handleLogout(e) {
+            e.preventDefault();
+            AuthAPI.logout();
+        }
+
+        // Display user name on load
+        document.addEventListener('DOMContentLoaded', () => {
+            const userName = localStorage.getItem('userName');
+            if (userName) {
+                document.querySelector('.hero h2').textContent = `Welcome, ${userName}`;
+            }
+        });
+    </script>
+</head>
+
+<body>
+
+    <!-- HEADER -->
+    <div class="header">
+        <div class="logo-box">
+            <div class="logo">PrajaVaradhi</div>
+            <img src="logo.png" class="site-logo">
+        </div>
+
+        <a href="#" class="logout" onclick="handleLogout(event)">Logout</a>
+    </div>
+
+    <!-- HERO -->
+    <section class="hero">
+        <h2>Welcome to PrajaVaradhi</h2>
+        <p>Your one platform for public services & government communication</p>
+    </section>
+
+    <!-- SERVICES -->
+    <section class="services">
+
+        <div class="service-card" onclick="location.href='raise.html'">
+            <h3>📢 Raise Request</h3>
+            <p>Report public issues easily</p>
+        </div>
+
+        <div class="service-card" onclick="location.href='budget.html'">
+            <h3>❓ Budget Enquiry</h3>
+            <p>Ask government related questions</p>
+        </div>
+
+        <div class="service-card" onclick="location.href='scheme.html'">
+            <h3>schemes</h3>
+            <p>Search rules & regulations</p>
+        </div>
+
+        <div class="service-card" onclick="location.href='track.html'">
+            <h3>📊 Track Complaints</h3>
+            <p>View issue progress</p>
+        </div>
+
+        <div class="service-card" onclick="location.href='updates.html'">
+            <h3>📰 Government Updates</h3>
+            <p>Latest announcements</p>
+        </div>
+
+        <div class="service-card" onclick="location.href='support.html'">
+            <h3>🛠 Help & Support</h3>
+            <p>Contact authorities</p>
+        </div>
+
+        <div class="service-card" onclick="location.href='feedback.html'">
+            <h3>⭐ Feedback</h3>
+            <p>Rate services</p>
+        </div>
+
+        <div class="service-card" onclick="location.href='profile.html'">
+            <h3>👤 My Profile</h3>
+            <p>Manage account</p>
+        </div>
+
+    </section>
+
+    <!-- FOOTER -->
+    <div class="footer">
+        <img src="indian-flag.jpg" alt="Indian Flag"
+            style="width:30px; height:20px; vertical-align:middle; margin-right:8px;">
+        PrajaVaradhi – Official Citizen Platform
+    </div>
+
+</body>
+
+</html>

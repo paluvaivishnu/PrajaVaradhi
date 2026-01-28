@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Portal | PrajaVaradhi</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      position: relative;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background:
+        radial-gradient(circle at 20% 50%, rgba(120, 119, 198, 0.3), transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(138, 43, 226, 0.3), transparent 50%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .header {
+      position: sticky;
+      top: 0;
+      padding: 20px 60px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+      z-index: 100;
+      transition: all 0.3s ease;
+    }
+
+    .logo-area {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .logo {
+      font-size: 28px;
+      font-weight: 800;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      letter-spacing: -0.5px;
+    }
+
+    .back {
+      font-size: 24px;
+      text-decoration: none;
+      color: #667eea;
+      font-weight: bold;
+      transition: all 0.3s ease;
+    }
+
+    .back:hover {
+      color: #764ba2;
+    }
+
+    .logout {
+      background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+      padding: 12px 28px;
+      color: white;
+      border-radius: 12px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 14px;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(245, 87, 108, 0.4);
+    }
+
+    .logout:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 25px rgba(245, 87, 108, 0.6);
+    }
+
+    .hero {
+      background: linear-gradient(135deg, rgba(102, 126, 234, 0.9) 0%, rgba(118, 75, 162, 0.9) 100%);
+      color: white;
+      padding: 80px 60px;
+      text-align: center;
+      position: relative;
+      z-index: 1;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -10%;
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(circle, rgba(255, 255, 255, 0.1), transparent 70%);
+      border-radius: 50%;
+      animation: float 6s ease-in-out infinite;
+    }
+
+    @keyframes float {
+
+      0%,
+      100% {
+        transform: translateY(0px);
+      }
+
+      50% {
+        transform: translateY(-20px);
+      }
+    }
+
+    .hero h2 {
+      font-size: 42px;
+      font-weight: 800;
+      margin-bottom: 16px;
+      letter-spacing: -1px;
+    }
+
+    .hero p {
+      font-size: 18px;
+      opacity: 0.95;
+      font-weight: 300;
+    }
+
+    .dashboard {
+      padding: 60px;
+      position: relative;
+      z-index: 1;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .stats-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 24px;
+      margin-bottom: 40px;
+    }
+
+    .stat-card {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      padding: 24px;
+      border-radius: 16px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+      transition: all 0.3s ease;
+      border: 1px solid rgba(255, 255, 255, 0.5);
+    }
+
+    .stat-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
+    }
+
+    .stat-label {
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #666;
+      margin-bottom: 8px;
+      font-weight: 600;
+    }
+
+    .stat-value {
+      font-size: 32px;
+      font-weight: 800;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .table-container {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+      border: 1px solid rgba(255, 255, 255, 0.5);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    thead {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    }
+
+    th {
+      color: white;
+      padding: 20px 16px;
+      font-weight: 700;
+      text-align: left;
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    tbody tr {
+      border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+      transition: all 0.3s ease;
+    }
+
+    tbody tr:hover {
+      background: linear-gradient(90deg, rgba(102, 126, 234, 0.05) 0%, rgba(118, 75, 162, 0.05) 100%);
+      transform: scale(1.005);
+    }
+
+    tbody tr:last-child {
+      border-bottom: none;
+    }
+
+    td {
+      padding: 20px 16px;
+      text-align: left;
+      color: #333;
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    .id-badge {
+      display: inline-block;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 6px 12px;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 12px;
+    }
+
+    .category-tag {
+      display: inline-block;
+      background: rgba(102, 126, 234, 0.1);
+      color: #667eea;
+      padding: 6px 12px;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 12px;
+    }
+
+    select,
+    input[type="text"] {
+      padding: 10px 14px;
+      border-radius: 10px;
+      border: 2px solid rgba(102, 126, 234, 0.2);
+      background: white;
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      outline: none;
+      width: 100%;
+      max-width: 200px;
+    }
+
+    select:focus,
+    input[type="text"]:focus {
+      border-color: #667eea;
+      box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+    }
+
+    .status-pending {
+      color: #f59e0b;
+    }
+
+    .status-action {
+      color: #3b82f6;
+    }
+
+    .status-resolved {
+      color: #10b981;
+    }
+
+    button {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 13px;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+      font-family: 'Inter', sans-serif;
+    }
+
+    button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 25px rgba(102, 126, 234, 0.5);
+    }
+
+    button:active {
+      transform: translateY(0);
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 60px 20px;
+      color: #666;
+    }
+
+    .empty-state svg {
+      width: 120px;
+      height: 120px;
+      margin-bottom: 20px;
+      opacity: 0.3;
+    }
+
+    .empty-state h3 {
+      font-size: 24px;
+      margin-bottom: 10px;
+      color: #333;
+    }
+
+    .empty-state p {
+      font-size: 16px;
+      opacity: 0.7;
+    }
+
+    @media (max-width: 768px) {
+      .header {
+        padding: 16px 24px;
+      }
+
+      .logo {
+        font-size: 22px;
+      }
+
+      .hero {
+        padding: 50px 24px;
+      }
+
+      .hero h2 {
+        font-size: 32px;
+      }
+
+      .hero p {
+        font-size: 16px;
+      }
+
+      .dashboard {
+        padding: 30px 24px;
+      }
+
+      .table-container {
+        overflow-x: auto;
+      }
+
+      table {
+        min-width: 800px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Include API and Auth JavaScript files -->
+  <script src="js/api.js"></script>
+  <script src="js/auth.js"></script>
+
+  <script>
+    // Check if user is admin
+    Utils.requireAdmin();
+  </script>
+
+  <div class="header">
+    <div style="display:flex;align-items:center;gap:15px;">
+      <a href="home.html" class="back">«</a>
+      <div class="logo-area">
+        <div class="logo">PrajaVaradhi Admin</div>
+        <img src="logo.png" alt="PrajaVaradhi Logo" style="width:35px;height:35px;object-fit:contain;">
+      </div>
+    </div>
+    <a href="#" class="logout" onclick="logout()">Logout</a>
+  </div>
+
+  <section class="hero">
+    <h2>Complaint Management Dashboard</h2>
+    <p id="adminDistrict">Monitor, update and resolve citizen requests efficiently</p>
+  </section>
+
+  <section class="dashboard">
+    <div class="stats-container" id="statsContainer">
+      <!-- Stats will be populated by JavaScript -->
+    </div>
+
+    <div class="table-container">
+      <table id="adminTable">
+        <thead>
+          <tr>
+            <th>Request ID</th>
+            <th>Category</th>
+            <th>Location</th>
+            <th>Status</th>
+            <th>Tag</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody id="tableBody">
+          <!-- Rows will be populated by JavaScript -->
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <script>
+    let issues = [];
+    const tableBody = document.getElementById("tableBody");
+    const statsContainer = document.getElementById("statsContainer");
+
+    // Load issues from Backend
+    async function loadIssues() {
+      try {
+        const response = await IssueAPI.getAll();
+        if (response.success) {
+          issues = response.data;
+          calculateStats();
+          populateTable();
+        }
+      } catch (error) {
+        console.error("Failed to load issues", error);
+        Utils.showError("Failed to load issues");
+      }
+    }
+
+    // Display admin's district
+    const userDistrict = localStorage.getItem('userDistrict');
+    if (userDistrict && userDistrict !== 'null') {
+      document.getElementById('adminDistrict').textContent = `Managing ${userDistrict} District`;
+    }
+
+    // Calculate statistics
+    function calculateStats() {
+      const total = issues.length;
+      const pending = issues.filter(i => i.status === "Pending").length;
+      const inAction = issues.filter(i => i.status === "In Action").length;
+      const resolved = issues.filter(i => i.status === "Resolved").length;
+
+      statsContainer.innerHTML = `
+        <div class="stat-card">
+          <div class="stat-label">Total Requests</div>
+          <div class="stat-value">${total}</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Pending</div>
+          <div class="stat-value" style="color: #f59e0b;">${pending}</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">In Action</div>
+          <div class="stat-value" style="color: #3b82f6;">${inAction}</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Resolved</div>
+          <div class="stat-value" style="color: #10b981;">${resolved}</div>
+        </div>
+      `;
+    }
+
+    // Populate table
+    function populateTable() {
+      if (issues.length === 0) {
+        tableBody.innerHTML = `
+          <tr>
+            <td colspan="6" class="empty-state">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+              </svg>
+              <h3>No Complaints Yet</h3>
+              <p>When citizens submit requests, they will appear here</p>
+            </td>
+          </tr>
+        `;
+        return;
+      }
+
+      tableBody.innerHTML = '';
+      issues.forEach((i) => {
+        let row = tableBody.insertRow();
+
+        let statusClass = '';
+        if (i.status === "Pending") statusClass = 'status-pending';
+        else if (i.status === "In Action") statusClass = 'status-action';
+        else if (i.status === "Resolved") statusClass = 'status-resolved';
+
+        // Using i._id for MongoDB ID reference
+        row.innerHTML = `
+          <td><span class="id-badge">#${i.id}</span></td>
+          <td>
+            <span class="category-tag">${i.category}</span>
+            <div style="font-size:12px;color:#666;margin-top:4px;">${Utils.formatDate(i.createdAt)}</div>
+          </td>
+          <td>
+            <div style="font-weight:600">${i.district}</div>
+            <div style="font-size:13px;color:#555;">${i.location}</div>
+          </td>
+          <td>
+            <select id="s_${i._id}" class="${statusClass}" onchange="updateStatusColor(this)">
+              <option value="Pending" ${i.status === "Pending" ? "selected" : ""}>Pending</option>
+              <option value="In Action" ${i.status === "In Action" ? "selected" : ""}>In Action</option>
+              <option value="Resolved" ${i.status === "Resolved" ? "selected" : ""}>Resolved</option>
+            </select>
+          </td>
+          <td>
+            <input type="text" id="t_${i._id}" placeholder="Add tag..." value="${i.tag || ""}">
+          </td>
+          <td>
+            <button onclick="saveChanges('${i._id}')">Update</button>
+          </td>
+        `;
+      });
+    }
+
+    function updateStatusColor(select) {
+      select.className = '';
+      if (select.value === "Pending") select.classList.add('status-pending');
+      else if (select.value === "In Action") select.classList.add('status-action');
+      else if (select.value === "Resolved") select.classList.add('status-resolved');
+    }
+
+    async function saveChanges(mongoId) {
+      const status = document.getElementById(`s_${mongoId}`).value;
+      const tag = document.getElementById(`t_${mongoId}`).value;
+      const button = event.target; // The button that was clicked
+
+      Utils.showLoading(button, 'Update');
+
+      try {
+        const updateData = { status, tag };
+        const response = await IssueAPI.update(mongoId, updateData);
+
+        if (response.success) {
+          // Update local data
+          const issueIndex = issues.findIndex(i => i._id === mongoId);
+          if (issueIndex !== -1) {
+            issues[issueIndex].status = status;
+            issues[issueIndex].tag = tag;
+          }
+
+          // UI Feedback
+          Utils.hideLoading(button);
+          const originalText = button.textContent;
+          button.textContent = "✓ Saved!";
+          button.style.background = "linear-gradient(135deg, #10b981 0%, #059669 100%)";
+
+          setTimeout(() => {
+            button.textContent = "Update"; // Reset to original text
+            button.style.background = ""; // Reset to original style
+          }, 2000);
+
+          // Refresh stats
+          calculateStats();
+        }
+      } catch (error) {
+        Utils.hideLoading(button);
+        Utils.showError("Failed to update issue");
+        console.error(error);
+      }
+    }
+
+    function logout() {
+      AuthAPI.logout();
+    }
+
+    // Initialize
+    loadIssues();
+  </script>
+
+</body>
+
+</html>

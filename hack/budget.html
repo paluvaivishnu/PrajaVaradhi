@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Budget & Funding Enquiries | PrajaVaradhi</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f3f6fb;
+        }
+
+        /* HEADER */
+        .header {
+            padding: 20px 40px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            background: white;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .back {
+            font-size: 26px;
+            text-decoration: none;
+            color: #0f2a44;
+            font-weight: bold;
+        }
+
+        /* LOGO AREA */
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-text {
+            font-size: 32px;
+            font-weight: 900;
+            color: #0f2a44;
+        }
+
+        .logo-img {
+            height: 35px;
+            width: auto;
+        }
+
+        /* PAGE TITLE */
+        .page-title {
+            padding: 40px;
+        }
+
+        .page-title h1 {
+            margin: 0;
+            color: #0f2a44;
+        }
+
+        .page-title p {
+            margin-top: 10px;
+            color: #555;
+        }
+
+        /* GRID */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            padding: 0 40px 60px;
+        }
+
+        /* LINK RESET */
+        .grid a {
+            text-decoration: none;
+            display: block;
+            height: 100%;
+        }
+
+        /* CARD */
+        .card {
+            background: white;
+            border: 2px solid #0f2a44;
+            border-radius: 10px;
+            padding: 25px;
+            transition: 0.3s;
+            cursor: pointer;
+            height: 100%;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            min-height: 220px;
+        }
+
+        .card:hover {
+            background: #e6f2fb;
+            transform: translateY(-4px);
+            box-shadow: 0 8px 20px rgba(15, 42, 68, 0.15);
+        }
+
+        .icon {
+            font-size: 40px;
+            margin-bottom: 15px;
+        }
+
+        .card h3 {
+            margin: 10px 0;
+            color: #0f2a44;
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .card p {
+            color: #555;
+            font-size: 14px;
+            line-height: 1.6;
+            margin: 0;
+            flex-grow: 1;
+        }
+
+        /* FOOTER */
+        .footer {
+            background: #0f2a44;
+            color: white;
+            text-align: center;
+            padding: 25px;
+            font-size: 14px;
+        }
+
+        /* MOBILE */
+        @media(max-width:600px) {
+            .page-title {
+                padding: 25px;
+            }
+
+            .grid {
+                padding: 0 25px 50px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- HEADER -->
+    <div class="header">
+        <a href="index.html" class="back">«</a>
+        <div class="logo-area">
+            <span class="logo-text">PrajaVaradhi</span>
+            <img src="logo.png" class="logo-img" alt="PrajaVaradhi Logo">
+        </div>
+    </div>
+
+    <!-- TITLE -->
+    <div class="page-title">
+        <h1>Budget & Funding Enquiries</h1>
+        <p>Explore public budget allocation, government funding, and financial transparency related to civic issues.</p>
+    </div>
+
+    <!-- GRID -->
+    <div class="grid">
+
+        <a href="https://apfinance.gov.in/budget" target="_blank">
+            <div class="card">
+                <div class="icon">💰</div>
+                <h3>Public Budget Allocation</h3>
+                <p>Enquire about how government budgets are allocated for infrastructure, health, education, and public
+                    services.</p>
+            </div>
+        </a>
+
+        <a href="https://cfms.ap.gov.in" target="_blank">
+            <div class="card">
+                <div class="icon">🏗️</div>
+                <h3>Project Funding Status</h3>
+                <p>Check funding approvals, pending allocations, and utilization for public development projects.</p>
+            </div>
+        </a>
+
+        <a href="https://cfms.ap.gov.in/Reports" target="_blank">
+            <div class="card">
+                <div class="icon">📊</div>
+                <h3>Department-wise Spending</h3>
+                <p>View and question expenditure details of specific government departments and agencies.</p>
+            </div>
+        </a>
+
+        <a href="https://www.myscheme.gov.in/search/state/Andhra%20Pradesh" target="_blank">
+            <div class="card">
+                <div class="icon">🧾</div>
+                <h3>Scheme & Grant Details</h3>
+                <p>Get information about government schemes, grants, subsidies, and eligibility criteria.</p>
+            </div>
+        </a>
+
+        <a href="https://hmfw.ap.gov.in" target="_blank">
+            <div class="card">
+                <div class="icon">🏥</div>
+                <h3>Health & Welfare Funding</h3>
+                <p>Enquire about funding for hospitals, welfare programs, disability support, and healthcare
+                    initiatives.</p>
+            </div>
+        </a>
+
+        <a href="https://cse.ap.gov.in/" target="_blank">
+            <div class="card">
+                <div class="icon">🏫</div>
+                <h3>Education Budget</h3>
+                <p>Learn about school, college, scholarship, and digital education funding allocations.</p>
+            </div>
+        </a>
+
+        <a href="https://apsac.ap.gov.in/dashboard-staging/ap-road-information-system/" target="_blank">
+            <div class="card">
+                <div class="icon">🚧</div>
+                <h3>Infrastructure & Roads</h3>
+                <p>Track funding related to roads, drainage, public transport, and urban development.</p>
+            </div>
+        </a>
+
+
+
+    </div>
+
+    <!-- FOOTER -->
+    <div class="footer">
+        <img src="indian-flag.jpg" alt="Indian Flag"
+            style="width:30px; height:20px; vertical-align:middle; margin-right:8px;">
+        PrajaVaradhi – Budget Transparency & Citizen Accountability Platform
+    </div>
+
+</body>
+
+</html>

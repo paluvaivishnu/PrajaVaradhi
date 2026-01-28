@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Sign Up | PrajaVaradhi</title>
+
+  <style>
+    * {
+      box-sizing: border-box
+    }
+
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Arial, sans-serif;
+      background: #fff;
+    }
+
+    /* MAIN LAYOUT */
+    .container {
+      display: flex;
+      height: 100vh;
+    }
+
+    /* LEFT SIDE */
+    .signup-box {
+      width: 40%;
+      padding: 30px 50px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      overflow-y: auto;
+      max-height: 100vh;
+    }
+
+    /* BRAND */
+    .brand {
+      font-size: 36px;
+      font-weight: 800;
+      color: #0f2a44;
+      letter-spacing: 1px;
+    }
+
+    /* FORM */
+    h2 {
+      margin: 0;
+      font-size: 24px;
+    }
+
+    .subtitle {
+      color: #666;
+      margin-bottom: 20px;
+      font-size: 14px;
+    }
+
+    label {
+      font-weight: 600;
+      margin-top: 12px;
+      display: block;
+      font-size: 14px;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px 12px;
+      margin-top: 4px;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      font-size: 14px;
+    }
+
+    /* OPTIONS */
+    .row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 12px 0;
+      font-size: 13px;
+    }
+
+    .row a {
+      color: #1d4ed8;
+      text-decoration: none;
+    }
+
+    /* BUTTON */
+    .signup-btn {
+      background: #0f2a44;
+      color: white;
+      border: none;
+      padding: 12px;
+      font-size: 15px;
+      font-weight: 600;
+      border-radius: 6px;
+      cursor: pointer;
+      margin-top: 8px;
+    }
+
+    /* RIGHT IMAGE */
+    .image-box {
+      width: 60%;
+      background: url("https://i.pinimg.com/736x/2b/39/6f/2b396ff7b47afb7bd72547c87bc1cdfd.jpg") center/cover no-repeat;
+    }
+
+    /* MOBILE */
+    @media(max-width:900px) {
+      .container {
+        flex-direction: column
+      }
+
+      .image-box {
+        height: 40vh;
+        width: 100%
+      }
+
+      .signup-box {
+        width: 100%;
+        padding: 50px
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+
+    <!-- LEFT -->
+    <div class="signup-box">
+
+      <!-- BACK + LOGO -->
+      <div style="display:flex;align-items:center;gap:14px;margin-bottom:20px;">
+        <a href="home.html" style="font-size:22px;
+                  color:#0f2a44;
+                  font-weight:bold;
+                  text-decoration:none;">
+          &laquo;
+        </a>
+        <div class="brand">PrajaVaradhi</div>
+        <img src="logo.png" alt="PrajaVaradhi Logo" style="width:35px;height:35px;object-fit:contain;">
+      </div>
+
+      <h2>Create Account</h2>
+      <p class="subtitle">Join PrajaVaradhi today</p>
+
+      <label>Full Name</label>
+      <input id="name" type="text" placeholder="Enter your name">
+
+      <label>Email</label>
+      <input id="email" type="email" placeholder="Enter your email">
+
+      <label>Phone</label>
+      <input id="phone" type="text" placeholder="Enter your phone number">
+
+      <label>Password</label>
+      <input id="password" type="password" placeholder="Create password">
+
+      <label>Confirm Password</label>
+      <input id="confirmPassword" type="password" placeholder="Confirm password">
+
+      <div class="row">
+        <label><input id="terms" type="checkbox"> I agree to terms & conditions</label>
+      </div>
+
+      <button class="signup-btn" onclick="signup()">Sign Up</button>
+
+      <div style="margin-top:20px;font-size:14px;">
+        Already have an account?
+        <a href="login.html" style="color:#1d4ed8;text-decoration:none;">Sign In</a>
+      </div>
+
+    </div>
+
+    <!-- RIGHT -->
+    <div class="image-box"></div>
+
+  </div>
+
+  <!-- Include API and Auth JavaScript files -->
+  <script src="js/api.js"></script>
+  <script src="js/auth.js"></script>
+
+</body>
+
+</html>

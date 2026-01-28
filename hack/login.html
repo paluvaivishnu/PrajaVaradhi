@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Login | PrajaVaradhi</title>
+
+  <style>
+    * {
+      box-sizing: border-box
+    }
+
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Arial, sans-serif;
+      background: #fff;
+    }
+
+    /* MAIN LAYOUT */
+    .container {
+      display: flex;
+      height: 100vh;
+    }
+
+    /* LEFT SIDE */
+    .login-box {
+      width: 40%;
+      padding: 60px 70px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    /* BRAND */
+    .brand {
+      font-size: 42px;
+      font-weight: 800;
+      color: #0f2a44;
+      letter-spacing: 1px;
+    }
+
+    /* FORM */
+    h2 {
+      margin: 0;
+      font-size: 28px;
+    }
+
+    .subtitle {
+      color: #666;
+      margin-bottom: 35px;
+    }
+
+    label {
+      font-weight: 600;
+      margin-top: 20px;
+      display: block;
+    }
+
+    input {
+      width: 100%;
+      padding: 14px;
+      margin-top: 6px;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      font-size: 15px;
+    }
+
+    /* OPTIONS */
+    .row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 18px 0;
+      font-size: 14px;
+    }
+
+    .row a {
+      color: #1d4ed8;
+      text-decoration: none;
+    }
+
+    /* BUTTON */
+    .login-btn {
+      background: #0f2a44;
+      color: white;
+      border: none;
+      padding: 14px;
+      font-size: 16px;
+      font-weight: 600;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    /* RIGHT IMAGE */
+    .image-box {
+      width: 60%;
+      background: url("https://s7ap1.scene7.com/is/image/incredibleindia/Dhyana%20Buddha%20Statue-%20Amaravati-Vijayawada-Andhra%20Pradesh-hero-hs?qlt=82&ts=1726743646729") center/cover no-repeat;
+    }
+
+    /* MOBILE */
+    @media(max-width:900px) {
+      .container {
+        flex-direction: column
+      }
+
+      .image-box {
+        height: 40vh;
+        width: 100%
+      }
+
+      .login-box {
+        width: 100%;
+        padding: 50px
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+
+    <!-- LEFT -->
+    <div class="login-box">
+
+      <!-- BACK + LOGO -->
+      <div style="display:flex;align-items:center;gap:14px;margin-bottom:40px;">
+        <a href="home.html" style="font-size:22px;
+                  color:#0f2a44;
+                  font-weight:bold;
+                  text-decoration:none;">
+          &laquo;
+        </a>
+        <div class="brand">PrajaVaradhi</div>
+        <img src="logo.png" alt="PrajaVaradhi Logo" style="width:40px;height:40px;object-fit:contain;">
+      </div>
+
+      <h2>Sign In</h2>
+      <p class="subtitle">Access your PrajaVaradhi account</p>
+
+      <label>Email or Phone</label>
+      <input id="user" type="text" placeholder="Enter your email or phone">
+
+      <label>Password</label>
+      <input id="pass" type="password" placeholder="Enter your password">
+
+      <div style="margin-top:12px;">
+        <label style="display:inline-flex;align-items:center;font-weight:400;cursor:pointer;">
+          <input type="checkbox" style="width:auto;margin:0 8px 0 0;cursor:pointer;"> Remember me
+        </label>
+      </div>
+
+      <div style="text-align:right;margin-top:8px;">
+        <a href="#" style="color:#1d4ed8;text-decoration:none;font-size:14px;">Forgot password?</a>
+      </div>
+
+      <button class="login-btn" onclick="login()">Sign In</button>
+
+      <div style="text-align:center; margin-top:20px; color:#666; font-size:14px;">
+        Don't have an account? <a href="signup.html" style="color:#1d4ed8; font-weight:bold; text-decoration:none;">Sign
+          up as Citizen</a><br>
+        <a href="admin-signup.html"
+          style="color:#667eea; font-weight:bold; text-decoration:none; margin-top:8px; display:inline-block;">Register
+          as District Admin</a>
+      </div>
+
+    </div>
+
+    <!-- RIGHT -->
+    <div class="image-box"></div>
+
+  </div>
+
+  <!-- Include API and Auth JavaScript files -->
+  <script src="js/api.js"></script>
+  <script src="js/auth.js"></script>
+
+</body>
+
+</html>

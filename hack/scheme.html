@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>AP Welfare Schemes | Praja Varadhi</title>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f3f6fb;
+      color: #333;
+    }
+
+    /* HEADER BAR */
+    .header {
+      background: white;
+      padding: 20px 40px;
+      border-bottom: 1px solid #ddd;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .back {
+      font-size: 26px;
+      text-decoration: none;
+      color: #0f2a44;
+      font-weight: bold;
+    }
+
+    .logo-area {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    /* SECTION HEADER */
+    .section-header {
+      padding: 40px;
+    }
+
+    .section-header h2 {
+      margin: 0;
+      font-size: 32px;
+      font-weight: 700;
+      color: #0f2a44;
+    }
+
+    .section-header p {
+      margin-top: 10px;
+      max-width: 800px;
+      font-size: 16px;
+      color: #555;
+    }
+
+    /* SCHEME SECTION */
+    .scheme-section {
+      padding: 0 40px 80px;
+    }
+
+    .scheme-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 25px;
+    }
+
+    /* SCHEME CARD */
+    .scheme-card {
+      background: white;
+      padding: 25px;
+      border-radius: 10px;
+      border: 1px solid #ddd;
+    }
+
+    .scheme-card h3 {
+      margin-top: 0;
+      color: #0f2a44;
+      font-size: 20px;
+    }
+
+    .scheme-card p {
+      color: #444;
+      font-size: 15px;
+      line-height: 1.5;
+    }
+
+    .scheme-card a {
+      display: inline-block;
+      margin-top: 12px;
+      color: #1d4ed8;
+      font-weight: 600;
+      text-decoration: none;
+    }
+
+    .scheme-card a:hover {
+      text-decoration: underline;
+    }
+
+    /* FOOTER */
+    .footer {
+      background: #0f2a44;
+      color: white;
+      text-align: center;
+      padding: 25px;
+      font-size: 14px;
+    }
+
+    /* MOBILE */
+    @media(max-width:600px) {
+
+      .header,
+      .section-header,
+      .scheme-section {
+        padding: 20px;
+      }
+
+      .section-header h2 {
+        font-size: 26px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- HEADER -->
+  <div class="header">
+    <a href="home.html" class="back">«</a>
+    <div class="logo-area">
+      <h1 style="margin:0;font-size:28px;color:#0f2a44;">Praja Varadhi</h1>
+      <img src="logo.png" alt="PrajaVaradhi Logo" style="width:35px;height:35px;object-fit:contain;">
+    </div>
+  </div>
+
+  <!-- SECTION TITLE -->
+  <div class="section-header">
+    <h2>AP Welfare Schemes</h2>
+    <p>
+      Explore currently running Super Six initiatives and Anna Canteen schemes
+      provided by the Andhra Pradesh Government. Access official information,
+      benefits, and eligibility details.
+    </p>
+  </div>
+
+  <!-- SCHEME LIST -->
+  <section class="scheme-section">
+    <div class="scheme-grid">
+
+      <div class="scheme-card">
+        <h3>Annadata Sukhibhava</h3>
+        <p>
+          Financial assistance to farmers to support agricultural investments
+          and crop productivity.
+        </p>
+        <a href="https://apagrisnet.gov.in" target="_blank">
+          View official details →
+        </a>
+      </div>
+
+      <div class="scheme-card">
+        <h3>Thalliki Vandanam</h3>
+        <p>
+          Financial support to mothers for the education of school-going children.
+        </p>
+        <a href="https://wdcw.ap.gov.in" target="_blank">
+          View official details →
+        </a>
+      </div>
+
+      <div class="scheme-card">
+        <h3>Deepam 2.0</h3>
+        <p>
+          Free LPG gas cylinders for eligible households to support clean cooking.
+        </p>
+        <a href="https://schemes.vikaspedia.in/viewcontent/schemesall/state-specific-schemes/welfare-schemes-of-andhra-pradesh/deepam-scheme?lgn=en"
+          target="_blank">
+          View official details →
+        </a>
+      </div>
+
+      <div class="scheme-card">
+        <h3>Stree Shakti (Free Bus Travel)</h3>
+        <p>
+          Free APSRTC bus travel for women across Andhra Pradesh.
+        </p>
+        <a href="https://www.apsrtc.ap.gov.in" target="_blank">
+          View official details →
+        </a>
+      </div>
+
+      <div class="scheme-card">
+        <h3>Anna Canteen Scheme</h3>
+        <p>
+          Subsidised nutritious meals provided through Anna Canteens
+          for economically weaker sections.
+        </p>
+        <a href="https://annacanteenstrust.ap.gov.in/#/MyDonations" target="_blank">
+          View official details →
+        </a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <img src="indian-flag.jpg" alt="Indian Flag"
+      style="width:30px; height:20px; vertical-align:middle; margin-right:8px;">
+    Praja Varadhi – Citizen Information Portal | Government of Andhra Pradesh
+  </div>
+
+</body>
+
+</html>

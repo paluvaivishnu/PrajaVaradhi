@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Track Complaints | PrajaVaradhi</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f7fb;
+        }
+
+        /* NAV */
+        .nav {
+            background: white;
+            padding: 15px 40px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .back {
+            font-size: 26px;
+            text-decoration: none;
+            color: #12345a;
+            font-weight: bold;
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        /* HERO */
+        .hero {
+            background: #0f2f4f;
+            color: white;
+            padding: 70px 50px;
+        }
+
+        /* SEARCH */
+        .search-box {
+            margin: 30px auto;
+            max-width: 500px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .search-box input {
+            flex: 1;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 15px;
+        }
+
+        .search-box button {
+            background: #0f2f4f;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        /* STATS */
+        .stats {
+            display: flex;
+            gap: 25px;
+            justify-content: center;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .stat {
+            background: white;
+            width: 220px;
+            padding: 25px;
+            text-align: center;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, .1);
+            cursor: pointer;
+            transition: .3s;
+        }
+
+        .stat:hover {
+            transform: translateY(-5px)
+        }
+
+        .stat h2 {
+            font-size: 36px;
+            color: #0f2f4f;
+        }
+
+        /* TABLE */
+        .section {
+            width: 90%;
+            margin: 40px auto;
+            animation: fade .4s ease;
+        }
+
+        @keyframes fade {
+            from {
+                opacity: 0;
+                transform: translateY(20px)
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0)
+            }
+        }
+
+        table {
+            width: 100%;
+            background: white;
+            border-collapse: collapse;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, .1);
+        }
+
+        th {
+            background: #0f2f4f;
+            color: white;
+            padding: 12px;
+        }
+
+        td {
+            padding: 12px;
+            text-align: center;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .resolved {
+            color: green;
+            font-weight: bold;
+        }
+
+        .action {
+            color: orange;
+            font-weight: bold;
+        }
+
+        .pending {
+            color: red;
+            font-weight: bold;
+        }
+
+        .tag {
+            background: #eef3ff;
+            color: #0f2f4f;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-weight: bold;
+            font-size: 13px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="nav">
+        <a href="home.html" class="back">«</a>
+        <div class="logo-area">
+            <div class="logo">PrajaVaradhi</div>
+            <img src="logo.png" alt="PrajaVaradhi Logo" style="width:30px;height:30px;object-fit:contain;">
+        </div>
+    </div>
+
+    <div class="hero">
+        <h1>Track Complaints</h1>
+        <p>Search by Request ID or view all requests</p>
+    </div>
+
+    <!-- SEARCH -->
+    <div class="search-box">
+        <input id="searchId" placeholder="Enter Request ID (e.g. VI-1234)">
+        <button onclick="searchRequest()">Track</button>
+    </div>
+
+    <!-- STATS -->
+    <div class="stats">
+        <div class="stat" onclick="filterStatus('all')">
+            <h2 id="totalCount">0</h2>
+            <p>Total Complaints</p>
+        </div>
+        <div class="stat" onclick="filterStatus('Resolved')">
+            <h2 id="resolvedCount">0</h2>
+            <p>Resolved</p>
+        </div>
+        <div class="stat" onclick="filterStatus('In Action')">
+            <h2 id="actionCount">0</h2>
+            <p>In Action</p>
+        </div>
+        <div class="stat" onclick="filterStatus('Pending')">
+            <h2 id="pendingCount">0</h2>
+            <p>Pending</p>
+        </div>
+    </div>
+
+    <!-- TABLE -->
+    <div class="section">
+        <table id="complaintTable">
+            <tr>
+                <th>Request ID</th>
+                <th>Category</th>
+                <th>Location</th>
+                <th>Date</th>
+                <th>Tag</th>
+                <th>Status</th>
+            </tr>
+        </table>
+    </div>
+
+    <!-- Include API and Auth JavaScript files -->
+    <script src="js/api.js"></script>
+    <script src="js/auth.js"></script>
+
+    <script>
+        let issues = [];
+        let table = document.getElementById("complaintTable");
+        const totalCount = document.getElementById("totalCount");
+        const resolvedCount = document.getElementById("resolvedCount");
+        const actionCount = document.getElementById("actionCount");
+        const pendingCount = document.getElementById("pendingCount");
+        const searchIdInput = document.getElementById("searchId");
+
+        /* LOAD FROM API */
+        async function loadIssues() {
+            try {
+                const response = await IssueAPI.getAll();
+                if (response.success) {
+                    issues = response.data;
+                    updateCounts();
+                    loadTable(issues);
+                }
+            } catch (error) {
+                console.error("Failed to load issues", error);
+                // Fallback to empty state or alert
+            }
+        }
+
+        /* RENDER TABLE */
+        function loadTable(data) {
+            table.innerHTML = `
+        <tr>
+          <th>Request ID</th>
+          <th>Category</th>
+          <th>Location</th>
+          <th>Date</th>
+          <th>Tag</th>
+          <th>Status</th>
+        </tr>`;
+
+            if (data.length === 0) {
+                let row = table.insertRow();
+                row.innerHTML = `<td colspan="6" style="padding:20px; color:#666;">No complaints found.</td>`;
+                return;
+            }
+
+            data.forEach(i => {
+                let row = table.insertRow();
+
+                let cls = "pending";
+                if (i.status === "Resolved") cls = "resolved";
+                if (i.status === "In Action") cls = "action";
+
+                row.innerHTML = `
+          <td>${i.id}</td>
+          <td>${i.category}</td>
+          <td>${i.location}</td>
+          <td>${Utils.formatDate(i.createdAt)}</td>
+          <td><span class="tag">${i.tag || "No Tag"}</span></td>
+          <td class="${cls}">${i.status}</td>
+        `;
+            });
+        }
+
+        /* COUNTS */
+        function updateCounts() {
+            let res = 0, act = 0, pen = 0;
+
+            issues.forEach(i => {
+                if (i.status === "Resolved") res++;
+                else if (i.status === "In Action") act++;
+                else pen++; // Default matches pending or others
+            });
+
+            totalCount.innerText = issues.length;
+            resolvedCount.innerText = res;
+            actionCount.innerText = act;
+            pendingCount.innerText = pen;
+        }
+
+        /* FILTER */
+        function filterStatus(status) {
+            if (status === "all") loadTable(issues);
+            else loadTable(issues.filter(i => i.status === status));
+        }
+
+        /* SEARCH */
+        function searchRequest() {
+            let id = searchIdInput.value.trim();
+
+            if (!id) {
+                loadTable(issues);
+                return;
+            }
+
+            // Case insensitive partial match or exact match on custom ID
+            let result = issues.filter(i => i.id.toUpperCase().includes(id.toUpperCase()));
+
+            if (result.length === 0) {
+                alert("No request found");
+                loadTable([]);
+            } else {
+                loadTable(result);
+            }
+        }
+
+        /* INIT */
+        loadIssues();
+    </script>
+
+</body>
+
+</html>

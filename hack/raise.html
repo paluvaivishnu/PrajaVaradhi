@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Raise Issue | PrajaVaradhi</title>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f3f6fb;
+    }
+
+    /* HEADER */
+    .header {
+      padding: 20px 40px;
+      display: flex;
+      align-items: center;
+      background: white;
+      border-bottom: 1px solid #ddd;
+      gap: 15px;
+    }
+
+    .back {
+      font-size: 28px;
+      text-decoration: none;
+      color: #0f2a44;
+      font-weight: bold;
+    }
+
+    .logo-wrap {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .logo-text {
+      font-size: 38px;
+      font-weight: 900;
+      color: #0f2a44;
+      letter-spacing: 1px;
+    }
+
+    .logo-img {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      object-fit: contain;
+    }
+
+    /* FORM SECTION */
+    .form-section {
+      padding: 80px 40px;
+      max-width: 900px;
+      margin: auto;
+    }
+
+    .form-box {
+      background: white;
+      padding: 40px;
+      border: 2px solid #0f2a44;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    }
+
+    .form-box h2 {
+      color: #0f2a44;
+      margin-top: 0;
+      font-size: 28px;
+    }
+
+    label {
+      font-weight: bold;
+      display: block;
+      margin-top: 20px;
+      color: #0f2a44;
+    }
+
+    input,
+    select,
+    textarea {
+      width: 100%;
+      padding: 12px;
+      margin-top: 8px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 15px;
+    }
+
+    textarea {
+      height: 120px;
+      resize: vertical;
+    }
+
+    /* LOCATION BUTTON */
+    .location-btn {
+      margin-top: 10px;
+      background: #f0f4fa;
+      border: 1px solid #0f2a44;
+      color: #0f2a44;
+      padding: 8px 16px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .location-btn:hover {
+      background: #e3ebf7;
+    }
+
+    /* BUTTON */
+    .submit-btn {
+      margin-top: 30px;
+      background: #0f2a44;
+      color: white;
+      border: none;
+      padding: 14px 32px;
+      font-size: 16px;
+      font-weight: bold;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .submit-btn:hover {
+      background: #143a63;
+    }
+
+    /* ID BOX */
+    .issue-id-box {
+      margin-top: 20px;
+      padding: 15px;
+      background: #e6f2fb;
+      border: 2px solid #0f2a44;
+      border-radius: 8px;
+      font-weight: bold;
+      color: #0f2a44;
+      text-align: center;
+      font-size: 18px;
+      display: none;
+    }
+
+    /* FOOTER */
+    .footer {
+      margin-top: 80px;
+      background: #0f2a44;
+      color: white;
+      padding: 30px;
+      text-align: center;
+      font-size: 15px;
+    }
+
+    @media(max-width:600px) {
+      .logo-text {
+        font-size: 28px;
+      }
+
+      .form-section {
+        padding: 40px 20px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- HEADER -->
+  <div class="header">
+    <a href="index.html" class="back">«</a>
+
+    <div class="logo-wrap">
+      <div class="logo-text">PrajaVaradhi</div>
+      <img src="logo.png" class="logo-img" alt="Logo">
+    </div>
+  </div>
+
+  <!-- FORM -->
+  <section class="form-section">
+
+    <div class="form-box">
+      <h2>Raise a Public Issue (Andhra Pradesh)</h2>
+      <p>Report problems directly to authorities and track progress.</p>
+
+      <label>District</label>
+      <select id="issue-district">
+        <option value="">Select District</option>
+        <option value="Visakhapatnam">Visakhapatnam</option>
+        <option value="Guntur">Guntur</option>
+        <option value="East Godavari">East Godavari</option>
+        <option value="West Godavari">West Godavari</option>
+        <option value="Krishna">Krishna</option>
+        <option value="Anantapur">Anantapur</option>
+        <option value="Chittoor">Chittoor</option>
+        <option value="Srikakulam">Srikakulam</option>
+        <option value="Kurnool">Kurnool</option>
+        <option value="Nellore">Nellore</option>
+        <option value="Prakasam">Prakasam</option>
+        <option value="YSR Kadapa">YSR Kadapa</option>
+        <option value="Vizianagaram">Vizianagaram</option>
+      </select>
+
+      <label>Issue Category</label>
+      <select id="issue-category">
+        <option>Road & Infrastructure</option>
+        <option>Water Supply</option>
+        <option>Electricity</option>
+        <option>Public Safety</option>
+        <option>Healthcare</option>
+        <option>Other</option>
+      </select>
+
+      <label>Issue Title</label>
+      <input type="text" id="issue-title" placeholder="Short description of problem">
+
+      <label>Location</label>
+      <input type="text" id="location" placeholder="Street / Area name or auto-detect">
+
+      <button type="button" class="location-btn" onclick="getLocation()">
+        📍 Use Current Location
+      </button>
+
+      <label>Issue Details</label>
+      <textarea id="issue-details" placeholder="Explain the issue clearly..."></textarea>
+
+      <label>Upload Image (optional)</label>
+      <input type="file">
+
+      <button class="submit-btn" onclick="submitIssue()">Submit Issue</button>
+
+      <div class="issue-id-box" id="issue-id-box">
+        Your Request ID: <span id="issue-id"></span>
+      </div>
+
+    </div>
+  </section>
+
+  <div class="footer">
+    <img src="indian-flag.jpg" alt="Indian Flag"
+      style="width:30px; height:20px; vertical-align:middle; margin-right:8px;">
+    PrajaVaradhi – Andhra Pradesh Citizen Services
+  </div>
+
+  <!-- Include API and Auth JavaScript files -->
+  <script src="js/api.js"></script>
+  <script src="js/auth.js"></script>
+
+  <script>
+    // Check if user is logged in
+    Utils.requireAuth();
+
+    function getLocation() {
+      if (navigator.geolocation) {
+        const btn = document.querySelector('.location-btn');
+        btn.textContent = '📍 Getting location...';
+
+        navigator.geolocation.getCurrentPosition(pos => {
+          document.getElementById('location').value =
+            "Lat: " + pos.coords.latitude.toFixed(5) +
+            ", Lng: " + pos.coords.longitude.toFixed(5);
+          btn.textContent = '📍 Location Detected';
+        }, (error) => {
+          alert("Could not get location. Please enter manually.");
+          btn.textContent = '📍 Use Current Location';
+        });
+      } else {
+        alert("Geolocation is not supported by this browser.");
+      }
+    }
+
+    async function submitIssue() {
+      const district = document.getElementById("issue-district").value;
+      const category = document.getElementById("issue-category").value;
+      const title = document.getElementById("issue-title").value;
+      const locationText = document.getElementById("location").value;
+      const details = document.getElementById("issue-details").value;
+      const submitBtn = document.querySelector('.submit-btn');
+
+      if (!district) {
+        Utils.showError("Please select Andhra Pradesh district");
+        return;
+      }
+
+      if (!title || !locationText || !details) {
+        Utils.showError("Please fill all required fields");
+        return;
+      }
+
+      // Show loading
+      Utils.showLoading(submitBtn, 'Submit Issue');
+
+      try {
+        const issueData = {
+          district,
+          category,
+          title,
+          location: locationText,
+          details,
+          priority: 'Medium'
+        };
+
+        const response = await IssueAPI.create(issueData);
+
+        // Hide loading
+        Utils.hideLoading(submitBtn);
+
+        if (response.success) {
+          const issue = response.data;
+          document.getElementById("issue-id").innerText = issue.id;
+          document.getElementById("issue-id-box").style.display = "block";
+
+          // Clear form
+          document.getElementById("issue-title").value = '';
+          document.getElementById("location").value = '';
+          document.getElementById("issue-details").value = '';
+
+          Utils.showSuccess(`Issue submitted successfully! ID: ${issue.id}`);
+        }
+      } catch (error) {
+        Utils.hideLoading(submitBtn);
+        Utils.showError(error.message || "Failed to submit issue. Please try again.");
+      }
+    }
+  </script>
+
+</body>
+
+</html>
