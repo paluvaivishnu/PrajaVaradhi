@@ -165,7 +165,7 @@
 <body>
 
     <div class="nav">
-        <a href="home.html" class="back">«</a>
+        <a href="citizen-dashboard.html" class="back">«</a>
         <div class="logo-area">
             <div class="logo">PrajaVaradhi</div>
             <img src="logo.png" alt="PrajaVaradhi Logo" style="width:30px;height:30px;object-fit:contain;">
@@ -173,8 +173,8 @@
     </div>
 
     <div class="hero">
-        <h1>Track Complaints</h1>
-        <p>Search by Request ID or view all requests</p>
+        <h1>My Tracked Complaints</h1>
+        <p>Monitor the status of your reported issues</p>
     </div>
 
     <!-- SEARCH -->
@@ -233,7 +233,18 @@
         /* LOAD FROM API */
         async function loadIssues() {
             try {
-                const response = await IssueAPI.getAll();
+                let response;
+                const userId = localStorage.getItem('userId');
+                const role = localStorage.getItem('role');
+
+                // If user is a citizen, only show their own issues
+                // If moderator or admin, they might still want to see all for tracking
+                if (role === 'citizen' && userId) {
+                    response = await IssueAPI.getUserIssues(userId);
+                } else {
+                    response = await IssueAPI.getAll();
+                }
+
                 if (response.success) {
                     issues = response.data;
                     updateCounts();
@@ -241,7 +252,6 @@
                 }
             } catch (error) {
                 console.error("Failed to load issues", error);
-                // Fallback to empty state or alert
             }
         }
 

@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Public Feedback & Sentiment | PrajaVaradhi</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f7fa;
+            min-height: 100vh;
+        }
+
+        .header {
+            background: #0f2742;
+            color: white;
+            padding: 15px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .back-btn {
+            color: white;
+            text-decoration: none;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .logout-btn {
+            background: #e74c3c;
+            color: white;
+            padding: 8px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, #0f2742 0%, #1a4d7a 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+
+        .hero p {
+            font-size: 16px;
+            opacity: 0.9;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        .empty-state {
+            background: white;
+            border-radius: 12px;
+            padding: 80px 40px;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .empty-icon {
+            font-size: 100px;
+            margin-bottom: 20px;
+            opacity: 0.3;
+        }
+
+        .empty-title {
+            font-size: 28px;
+            color: #0f2742;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+
+        .empty-description {
+            color: #666;
+            font-size: 18px;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <div class="logo-section">
+            <a href="publicrepresentative-dashboard.html" class="back-btn">←</a>
+            <div class="logo">PrajaVaradhi<img src="logo.png" alt="PrajaVaradhi"
+                    style="height:30px;vertical-align:middle;margin-left:10px;"></div>
+        </div>
+        <div style="display:flex;align-items:center;gap:20px;"><a href="publicrepresentative-dashboard.html"
+                style="color:white;text-decoration:none;font-weight:bold;">🏠 Dashboard</a><button class="logout-btn"
+                onclick="logout()">Logout</button></div>
+    </div>
+
+    <div class="hero">
+        <h1>💬 Public Feedback & Sentiment</h1>
+        <p>View citizen feedback, ratings, and sentiment analysis</p>
+    </div>
+
+    <div class="container">
+        <div class="empty-state">
+            <div class="empty-icon">💬</div>
+            <div class="empty-title">Feedback Module Coming Soon</div>
+            <div class="empty-description">
+                This section will display citizen feedback, ratings, and sentiment analysis.<br>
+                Feedback collection features are under development.
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function logout() {
+            localStorage.clear();
+            window.location.href = 'login.html';
+        }
+    </script>
+</body>
+
+</html>

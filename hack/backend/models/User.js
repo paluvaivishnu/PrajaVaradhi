@@ -30,7 +30,7 @@ const userSchema = new mongoose.Schema({
     },
     role: {
         type: String,
-        enum: ['citizen', 'admin'],
+        enum: ['citizen', 'admin', 'moderator'],
         default: 'citizen'
     },
     district: {
@@ -57,7 +57,9 @@ const userSchema = new mongoose.Schema({
     registeredDate: {
         type: Date,
         default: Date.now
-    }
+    },
+    resetPasswordToken: String,
+    resetPasswordExpire: Date
 }, {
     timestamps: true
 });

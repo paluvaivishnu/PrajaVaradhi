@@ -70,6 +70,24 @@ const issueSchema = new mongoose.Schema({
         type: String,
         default: ''
     },
+    progressUpdates: [{
+        comment: {
+            type: String,
+            required: true
+        },
+        photo: {
+            type: String,
+            default: ''
+        },
+        updatedBy: {
+            type: String,
+            default: ''
+        },
+        updatedAt: {
+            type: Date,
+            default: Date.now
+        }
+    }],
     viewCount: {
         type: Number,
         default: 0
@@ -77,6 +95,28 @@ const issueSchema = new mongoose.Schema({
     upvotes: {
         type: Number,
         default: 0
+    },
+    isVerified: {
+        type: Boolean,
+        default: false
+    },
+    moderatorNotes: {
+        type: String,
+        default: ''
+    },
+    isDuplicate: {
+        type: Boolean,
+        default: false
+    },
+    duplicateOf: {
+        type: String
+    },
+    verifiedBy: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
+    },
+    verifiedDate: {
+        type: Date
     },
     date: {
         type: String,

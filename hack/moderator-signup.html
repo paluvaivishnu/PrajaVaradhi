@@ -3,13 +3,13 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Admin Registration | PrajaVaradhi</title>
+    <title>Moderator Registration | PrajaVaradhi</title>
 
     <style>
         body {
             margin: 0;
             font-family: Arial, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
             min-height: 100vh;
             display: flex;
             align-items: center;
@@ -26,7 +26,7 @@
         }
 
         h2 {
-            color: #667eea;
+            color: #11998e;
             margin-bottom: 10px;
             font-size: 28px;
         }
@@ -58,13 +58,13 @@
         input:focus,
         select:focus {
             outline: none;
-            border-color: #667eea;
+            border-color: #11998e;
         }
 
         .signup-btn {
             width: 100%;
             margin-top: 30px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
             color: white;
             border: none;
             padding: 14px;
@@ -86,7 +86,7 @@
         }
 
         .login-link a {
-            color: #667eea;
+            color: #11998e;
             font-weight: bold;
             text-decoration: none;
         }
@@ -94,7 +94,7 @@
         .back-link {
             display: inline-block;
             margin-bottom: 20px;
-            color: #667eea;
+            color: #11998e;
             text-decoration: none;
             font-weight: bold;
         }
@@ -110,14 +110,14 @@
     <div class="signup-container">
         <a href="index.html" class="back-link">← Back to Home</a>
 
-        <h2>Admin Registration</h2>
-        <p class="subtitle">Register as a District Administrator</p>
+        <h2>Moderator Registration</h2>
+        <p class="subtitle">Register as an Issue Verifier & Moderator</p>
 
         <label>Full Name</label>
         <input type="text" id="name" placeholder="Enter your full name" required>
 
         <label>Email</label>
-        <input type="email" id="email" placeholder="admin@example.com" required>
+        <input type="email" id="email" placeholder="moderator@example.com" required>
 
         <label>Phone Number</label>
         <input type="tel" id="phone" placeholder="10-digit phone number" maxlength="10" required>
@@ -146,10 +146,10 @@
         <label>Confirm Password</label>
         <input type="password" id="confirmPassword" placeholder="Re-enter password" required>
 
-        <label>Admin Code (Provided by Government)</label>
-        <input type="text" id="adminCode" placeholder="Enter your admin verification code" required>
+        <label>Moderator Code (Provided by Government)</label>
+        <input type="text" id="moderatorCode" placeholder="Enter your moderator verification code" required>
 
-        <button class="signup-btn" onclick="adminSignup()">Register as Admin</button>
+        <button class="signup-btn" onclick="moderatorSignup()">Register as Moderator</button>
 
         <div class="login-link">
             Already have an account? <a href="login.html">Login here</a>
@@ -161,18 +161,18 @@
     <script src="js/auth.js"></script>
 
     <script>
-        async function adminSignup() {
+        async function moderatorSignup() {
             const name = document.getElementById("name").value.trim();
             const email = document.getElementById("email").value.trim();
             const phone = document.getElementById("phone").value.trim();
             const district = document.getElementById("district").value;
             const password = document.getElementById("password").value;
             const confirmPassword = document.getElementById("confirmPassword").value;
-            const adminCode = document.getElementById("adminCode").value.trim();
+            const moderatorCode = document.getElementById("moderatorCode").value.trim();
             const signupBtn = document.querySelector('.signup-btn');
 
             // Validation
-            if (!name || !email || !phone || !district || !password || !confirmPassword || !adminCode) {
+            if (!name || !email || !phone || !district || !password || !confirmPassword || !moderatorCode) {
                 Utils.showError("Please fill all fields");
                 return;
             }
@@ -202,14 +202,14 @@
                 return;
             }
 
-            // Admin code validation (simple check - you can make this more secure)
-            if (adminCode !== "ADMIN2026") {
-                Utils.showError("Invalid admin verification code");
+            // Moderator code validation
+            if (moderatorCode !== "MOD2026") {
+                Utils.showError("Invalid moderator verification code");
                 return;
             }
 
             // Show loading
-            Utils.showLoading(signupBtn, 'Register as Admin');
+            Utils.showLoading(signupBtn, 'Register as Moderator');
 
             try {
                 const userData = {
@@ -218,7 +218,7 @@
                     phone: phone,
                     password: password,
                     district: district,
-                    role: 'admin'
+                    role: 'moderator'
                 };
 
                 const response = await AuthAPI.signup(userData);
@@ -226,14 +226,14 @@
                 Utils.hideLoading(signupBtn);
 
                 if (response.success) {
-                    Utils.showSuccess("Admin account created successfully! Please login.");
+                    Utils.showSuccess("Moderator account created successfully! Please login.");
                     setTimeout(() => {
                         window.location.href = "login.html";
                     }, 1000);
                 }
             } catch (error) {
                 Utils.hideLoading(signupBtn);
-                Utils.showError(error.message || "Admin signup failed. Please try again.");
+                Utils.showError(error.message || "Moderator signup failed. Please try again.");
             }
         }
     </script>

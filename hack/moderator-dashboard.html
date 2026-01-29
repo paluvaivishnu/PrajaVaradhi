@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Moderator Dashboard | PrajaVaradhi</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f0f7f4;
+            min-height: 100vh;
+        }
+
+        /* Header */
+        .header {
+            background: #11998e;
+            color: white;
+            padding: 15px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .logout-btn {
+            background: #e74c3c;
+            color: white;
+            padding: 8px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        /* Hero */
+        .hero {
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            color: white;
+            padding: 40px 40px;
+            text-align: center;
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        /* Filters */
+        .filters {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .filter-group {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .filter-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #11998e;
+        }
+
+        .filter-group select,
+        .filter-group input {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+        }
+
+        /* Grid */
+        .issues-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+            gap: 25px;
+        }
+
+        .issue-card {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            border-left: 5px solid #ddd;
+            position: relative;
+        }
+
+        .issue-card.verified {
+            border-left-color: #2ecc71;
+        }
+
+        .issue-card.duplicate {
+            border-left-color: #e67e22;
+            opacity: 0.8;
+        }
+
+        .status-badge {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .verified-badge {
+            background: #e8f5e9;
+            color: #2e7d32;
+        }
+
+        .duplicate-badge {
+            background: #fff3e0;
+            color: #e65100;
+        }
+
+        .unverified-badge {
+            background: #ffebee;
+            color: #c62828;
+        }
+
+        .issue-title {
+            font-size: 19px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 10px;
+            padding-right: 80px;
+        }
+
+        .issue-info {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 15px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .issue-info span {
+            background: #f0f0f0;
+            padding: 2px 8px;
+            border-radius: 4px;
+        }
+
+        .issue-details {
+            font-size: 14px;
+            color: #444;
+            margin-bottom: 20px;
+            line-height: 1.5;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        /* Actions */
+        .card-actions {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: auto;
+        }
+
+        .action-btn {
+            padding: 10px;
+            border: none;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 13px;
+            transition: 0.2s;
+        }
+
+        .verify-btn {
+            background: #2ecc71;
+            color: white;
+        }
+
+        .verify-btn:hover {
+            background: #27ae60;
+        }
+
+        .duplicate-btn {
+            background: #f39c12;
+            color: white;
+        }
+
+        .duplicate-btn:hover {
+            background: #d35400;
+        }
+
+        .notes-area {
+            width: 100%;
+            margin-top: 15px;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 13px;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 500px;
+        }
+
+        .modal h3 {
+            margin-bottom: 20px;
+            color: #11998e;
+        }
+
+        .close-modal {
+            float: right;
+            cursor: pointer;
+            font-size: 20px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="header">
+        <div class="logo-section">
+            <div class="logo">PrajaVaradhi MODERATOR</div>
+            <img src="logo.png" style="height:30px;margin-left:10px;">
+        </div>
+        <button class="logout-btn" onclick="AuthAPI.logout()">Logout</button>
+    </div>
+
+    <div class="hero">
+        <h1>🔍 Verification Portal</h1>
+        <p>Analyze citizen requests, eliminate duplicates, and verify authenticity.</p>
+    </div>
+
+    <div class="container">
+        <!-- Dashboard Stats -->
+        <div class="filters" style="display:flex; justify-content: space-around; text-align: center;">
+            <div>
+                <h2 id="totalCount">0</h2><small>Total Received</small>
+            </div>
+            <div>
+                <h2 id="unverifiedCount" style="color:#c62828;">0</h2><small>Pending Verification</small>
+            </div>
+            <div>
+                <h2 id="verifiedCount" style="color:#2e7d32;">0</h2><small>Verified Genuine</small>
+            </div>
+            <div>
+                <h2 id="duplicateCount" style="color:#e65100;">0</h2><small>Duplicates Found</small>
+            </div>
+        </div>
+
+        <!-- Filters -->
+        <div class="filters">
+            <div class="filter-group">
+                <label>Search by Keyword</label>
+                <input type="text" id="searchBox" placeholder="Search title or details..." onkeyup="filterIssues()">
+            </div>
+            <div class="filter-group">
+                <label>Verification Status</label>
+                <select id="verifyFilter" onchange="filterIssues()">
+                    <option value="all">All</option>
+                    <option value="unverified">Unverified</option>
+                    <option value="verified">Verified</option>
+                    <option value="duplicate">Duplicates</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label>Category</label>
+                <select id="catFilter" onchange="filterIssues()">
+                    <option value="all">All Categories</option>
+                    <option value="Road & Infrastructure">Roads</option>
+                    <option value="Water Supply">Water</option>
+                    <option value="Electricity">Electricity</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Grid -->
+        <div class="issues-grid" id="issuesGrid">
+            <!-- Loader -->
+            <p style="text-align: center; grid-column: 1/-1; padding: 50px;">Loading issues...</p>
+        </div>
+    </div>
+
+    <!-- Duplicate Link Modal -->
+    <div id="duplicateModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeDuplicateModal()">&times;</span>
+            <h3>Link as Duplicate</h3>
+            <p>Enter the original Issue ID to link this request to:</p>
+            <input type="text" id="origIdInput" class="notes-area"
+                placeholder="Enter original issue ID (e.g. VIS-2025...)">
+            <textarea id="dupNotes" class="notes-area" placeholder="Add moderator notes..."></textarea>
+            <div style="display: flex; gap: 10px; margin-top: 20px;">
+                <button class="action-btn duplicate-btn" style="flex:1" onclick="submitDuplicate()">Mark as
+                    Duplicate</button>
+                <button class="action-btn" style="flex:1; background:#eee"
+                    onclick="closeDuplicateModal()">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/api.js"></script>
+    <script>
+        let allIssues = [];
+        let filteredIssues = [];
+        let currentActionId = null;
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', async () => {
+            if (!Utils.isLoggedIn() || Utils.getUserRole() !== 'moderator') {
+                // Redirect if not moderator
+                // window.location.href = 'login.html';
+            }
+            await loadIssues();
+        });
+
+        async function loadIssues() {
+            try {
+                const response = await apiCall('/issues', 'GET');
+                allIssues = response.data;
+                updateStats();
+                filterIssues();
+            } catch (error) {
+                console.error(error);
+                document.getElementById('issuesGrid').innerHTML = '<p style="color:red; text-align:center;">Failed to load data.</p>';
+            }
+        }
+
+        function updateStats() {
+            document.getElementById('totalCount').innerText = allIssues.length;
+            document.getElementById('unverifiedCount').innerText = allIssues.filter(i => !i.isVerified && !i.isDuplicate).length;
+            document.getElementById('verifiedCount').innerText = allIssues.filter(i => i.isVerified).length;
+            document.getElementById('duplicateCount').innerText = allIssues.filter(i => i.isDuplicate).length;
+        }
+
+        function filterIssues() {
+            const search = document.getElementById('searchBox').value.toLowerCase();
+            const vStatus = document.getElementById('verifyFilter').value;
+            const cat = document.getElementById('catFilter').value;
+
+            filteredIssues = allIssues.filter(i => {
+                const matchesSearch = i.title.toLowerCase().includes(search) || i.details.toLowerCase().includes(search);
+                const matchesCat = cat === 'all' || i.category === cat;
+
+                let matchesStatus = true;
+                if (vStatus === 'unverified') matchesStatus = !i.isVerified && !i.isDuplicate;
+                if (vStatus === 'verified') matchesStatus = i.isVerified;
+                if (vStatus === 'duplicate') matchesStatus = i.isDuplicate;
+
+                return matchesSearch && matchesCat && matchesStatus;
+            });
+
+            renderIssues();
+        }
+
+        function renderIssues() {
+            const grid = document.getElementById('issuesGrid');
+            grid.innerHTML = '';
+
+            filteredIssues.forEach(issue => {
+                const isVerified = issue.isVerified;
+                const isDup = issue.isDuplicate;
+
+                let badgeClass = 'unverified-badge';
+                let badgeText = 'UNVERIFIED';
+                if (isVerified) { badgeClass = 'verified-badge'; badgeText = 'VERIFIED'; }
+                if (isDup) { badgeClass = 'duplicate-badge'; badgeText = 'DUPLICATE'; }
+
+                const card = document.createElement('div');
+                card.className = `issue-card ${isVerified ? 'verified' : ''} ${isDup ? 'duplicate' : ''}`;
+
+                card.innerHTML = `
+                    <span class="status-badge ${badgeClass}">${badgeText}</span>
+                    <div class="issue-title">${issue.title}</div>
+                    <div class="issue-info">
+                        <span style="background:#0f2742; color:white; font-weight:bold;">🆔 ${issue.id}</span>
+                        <span>📍 ${issue.district}</span>
+                        <span>📁 ${issue.category}</span>
+                        <span>🗓 ${issue.date}</span>
+                    </div>
+                    <div class="issue-details">${issue.details}</div>
+                    
+                    ${!isVerified && !isDup ? `
+                        <textarea class="notes-area" id="notes-${issue._id}" placeholder="Moderator notes..."></textarea>
+                        <div class="card-actions">
+                            <button class="action-btn verify-btn" onclick="markGenuine('${issue._id}')">✅ Genuine</button>
+                            <button class="action-btn duplicate-btn" onclick="openDuplicateModal('${issue._id}')">👯 Duplicate</button>
+                        </div>
+                    ` : `
+                        <div style="font-size:12px; border-top:1px solid #eee; padding-top:10px; color:#666;">
+                            <strong>Moderator Notes:</strong> ${issue.moderatorNotes || 'No notes.'}
+                            ${isDup ? `<br><strong>Original ID:</strong> ${issue.duplicateOf || 'N/A'}` : ''}
+                        </div>
+                    `}
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        async function markGenuine(id) {
+            const b = event.target;
+            const notes = document.getElementById(`notes-${id}`).value;
+
+            try {
+                b.disabled = true;
+                b.innerText = 'Verifying...';
+
+                const response = await apiCall(`/issues/${id}/verify`, 'PUT', {
+                    isVerified: true,
+                    moderatorNotes: notes || 'Verified as genuine request.'
+                });
+
+                if (response.success) {
+                    await loadIssues();
+                }
+            } catch (error) {
+                alert(error.message);
+                b.disabled = false;
+                b.innerText = '✅ Genuine';
+            }
+        }
+
+        function openDuplicateModal(id) {
+            currentActionId = id;
+            document.getElementById('duplicateModal').style.display = 'flex';
+        }
+
+        function closeDuplicateModal() {
+            document.getElementById('duplicateModal').style.display = 'none';
+        }
+
+        async function submitDuplicate() {
+            const origId = document.getElementById('origIdInput').value;
+            const notes = document.getElementById('dupNotes').value;
+
+            if (!origId) return alert('Please enter the original issue ID');
+
+            try {
+                const response = await apiCall(`/issues/${currentActionId}/verify`, 'PUT', {
+                    isDuplicate: true,
+                    duplicateOf: origId, // For simplicity we store the ID string here, ideally would be the mongoID
+                    moderatorNotes: notes || 'Marked as duplicate.'
+                });
+
+                if (response.success) {
+                    closeDuplicateModal();
+                    await loadIssues();
+                }
+            } catch (error) {
+                alert(error.message);
+            }
+        }
+    </script>
+</body>
+
+</html>

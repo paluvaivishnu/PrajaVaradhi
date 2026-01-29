@@ -3,21 +3,64 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>PrajaVaradhi | Dashboard</title>
+    <title>PrajaVaradhi | Citizen & Public Representative Bridge</title>
 
     <style>
         body {
             margin: 0;
             font-family: Arial, sans-serif;
-            background: #f3f6fb;
+            line-height: 1.6;
+            background-image: url('ap-culture.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255, 255, 255, 0.75);
+            z-index: -1;
+        }
+
+        /* NOTICE */
+        .notice {
+            background: #f1f1f1;
+            padding: 10px 40px;
+            font-size: 14px;
+        }
+
+        .notice a {
+            color: #1d4ed8;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        /* INFO EXPAND */
+        .info-box {
+            display: none;
+            padding: 25px 40px;
+            background: #fafafa;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .info-row {
+            display: flex;
+            gap: 40px;
+            flex-wrap: wrap;
         }
 
         /* HEADER */
         .header {
-            padding: 18px 40px;
+            padding: 15px 40px;
             display: flex;
             justify-content: space-between;
-            align-items: center;
             background: white;
             border-bottom: 1px solid #ddd;
         }
@@ -25,25 +68,33 @@
         .logo-box {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 15px;
+        }
+
+        .back {
+            font-size: 24px;
+            text-decoration: none;
+            color: #0f2a44;
+            font-weight: bold;
         }
 
         .logo {
-            font-size: 28px;
-            font-weight: 900;
+            font-size: 26px;
+            font-weight: bold;
             color: #0f2a44;
         }
 
         .site-logo {
-            width: 30px;
-            height: 30px;
+            width: 28px;
+            height: 28px;
             object-fit: contain;
         }
 
-        .logout {
-            background: #d62828;
+        .auth a {
+            background: #0f2a44;
             color: white;
             padding: 8px 14px;
+            margin-left: 10px;
             border-radius: 6px;
             text-decoration: none;
             font-weight: bold;
@@ -53,153 +104,382 @@
         .hero {
             background: #0f2a44;
             color: white;
-            padding: 60px 40px;
-            text-align: center;
+            padding: 90px 40px;
         }
 
         .hero h2 {
-            font-size: 38px;
+            font-size: 42px;
         }
 
-        /* SERVICES GRID */
-        .services {
-            max-width: 1100px;
-            margin: -40px auto 80px;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 25px;
-            padding: 0 40px;
-        }
-
-        .service-card {
+        /* QUICK BAR */
+        .quick {
             background: white;
+            max-width: 1000px;
+            margin: -40px auto 60px;
+            padding: 25px;
+            display: flex;
+            gap: 25px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, .15);
+            flex-wrap: wrap;
+        }
+
+        .quick div {
+            border-left: 4px solid #0f2a44;
+            padding-left: 15px;
+            font-weight: bold;
+        }
+
+        /* TOPICS */
+        .topics {
+            padding: 60px 40px;
+            background-image: url('ap-culture.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            position: relative;
+        }
+
+        .topics::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255, 255, 255, 0.65);
+            z-index: 0;
+        }
+
+        .topics>* {
+            position: relative;
+            z-index: 1;
+        }
+
+        .topics h2 {
+            color: #d62828;
+            border-bottom: 4px solid #d62828;
+            display: inline-block;
+            margin-bottom: 40px;
+        }
+
+        .topic-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 20px;
+        }
+
+        .topic-card {
+            background: white;
+            padding: 25px;
             border: 2px solid #0f2a44;
-            border-radius: 12px;
-            padding: 28px;
-            text-align: center;
-            cursor: pointer;
-            transition: 0.3s;
         }
 
-        .service-card:hover {
-            transform: translateY(-6px);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, .15);
-        }
-
-        .service-card h3 {
+        .topic-card h3 {
             color: #0f2a44;
-            margin-bottom: 10px;
         }
 
-        .service-card p {
-            color: #444;
+        /* FEATURES */
+        .section {
+            padding: 80px 40px;
+            text-align: center;
         }
 
-        /* FOOTER */
-        .footer {
+        .features {
+            display: flex;
+            gap: 25px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .feature {
             background: #0f2a44;
             color: white;
-            padding: 35px;
+            padding: 25px;
+            width: 250px;
+            border-radius: 6px;
+        }
+
+        /* STEPS */
+        .steps {
+            display: flex;
+            gap: 30px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .step {
+            background: #f3f6fb;
+            width: 230px;
+            padding: 25px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+        }
+
+        /* ROLES */
+        .roles {
+            display: flex;
+            gap: 25px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .role {
+            width: 230px;
+            padding: 25px;
+            border: 2px solid #0f2a44;
+            border-radius: 8px;
+        }
+
+        /* ABOUT */
+        .about {
+            background: white;
+            padding: 80px 40px;
             text-align: center;
-            margin-top: 60px;
+        }
+
+        .about-box {
+            max-width: 900px;
+            margin: auto;
+            display: flex;
+            gap: 40px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .about-card {
+            border: 2px solid #0f2a44;
+            padding: 25px;
+            width: 260px;
+            border-radius: 8px;
+        }
+
+        .about-card h3 {
+            color: #0f2a44;
+        }
+
+        .about a {
+            color: #1d4ed8;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        /* CONTACT */
+        .contact {
+            background: #dff3f8;
+            padding: 60px 40px;
+            font-size: 20px;
+        }
+
+        /* FINAL FOOTER */
+        .final-footer {
+            background: #0f2a44;
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+
+        .final-footer a {
+            color: white;
+            text-decoration: underline;
+            margin: 0 15px;
         }
     </style>
+</head>
+
+<body>
+
+    <!-- NOTICE -->
+    <div class="notice">
+        <img src="indian-flag.jpg" alt="Indian Flag"
+            style="width:30px; height:20px; vertical-align:middle; margin-right:8px;"> An official state government
+        platform —
+        <a onclick="toggleInfo()">Here’s how you know ⌄</a>
+    </div>
+
+    <div class="info-box" id="info">
+        <div class="info-row">
+            <div><img src="indian-flag.jpg" alt="Indian Flag"
+                    style="width:24px; height:16px; vertical-align:middle; margin-right:8px;"> Official government
+                operated service</div>
+            <div>🔒 Secure & encrypted communication</div>
+        </div>
+    </div>
+
+    <!-- HEADER -->
+    <div class="header">
+
+        <div class="logo-box">
+            <div class="logo">PrajaVaradhi</div>
+            <img src="logo.png" class="site-logo" alt="PrajaVaradhi Logo">
+        </div>
+
+        <div class="auth">
+            <a href="login.html">Login</a>
+            <a href="signup.html">Sign Up</a>
+        </div>
+
+    </div>
+
+    <!-- HERO -->
+    <section class="hero">
+        <h2>Making Government Communication Easier</h2>
+        <p>Report issues. Track progress. Get official responses.</p>
+    </section>
+
+    <!-- QUICK -->
+    <div class="quick">
+        <div>Report public problems</div>
+        <div>Track complaints</div>
+        <div>Get leader updates</div>
+        <div>Give feedback</div>
+    </div>
+
+    <!-- TOPICS -->
+    <section class="topics">
+        <h2>All topics and services</h2>
+        <div class="topic-grid">
+            <div class="topic-card">
+                <h3>Public Issues</h3>
+                <p>Roads, water, electricity</p>
+            </div>
+            <div class="topic-card">
+                <h3>Complaints</h3>
+                <p>File & track issues</p>
+            </div>
+            <div class="topic-card">
+                <h3>Emergency</h3>
+                <p>Urgent problems</p>
+            </div>
+            <div class="topic-card">
+                <h3>Feedback</h3>
+                <p>Service reviews</p>
+            </div>
+            <div class="topic-card">
+                <h3>Leader Updates</h3>
+                <p>Announcements</p>
+            </div>
+            <div class="topic-card">
+                <h3>Community Projects</h3>
+                <p>Ongoing work</p>
+            </div>
+            <div class="topic-card">
+                <h3>Transparency</h3>
+                <p>Public fund tracking</p>
+            </div>
+            <div class="topic-card">
+                <h3>Support</h3>
+                <p>Help & guidance</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- FEATURES -->
+    <section class="section">
+        <h2>What This App Can Do</h2>
+        <div class="features">
+            <div class="feature">Raise issues</div>
+            <div class="feature">Direct communication</div>
+            <div class="feature">Transparent updates</div>
+            <div class="feature">Secure platform</div>
+        </div>
+    </section>
+
+    <!-- HOW IT WORKS (UPDATED) -->
+    <section class="section" style="background:#f3f6fb;">
+        <h2>How It Works</h2>
+
+        <div class="steps">
+            <div class="step">
+                <strong>1. Submit Issue</strong>
+                <p>Citizens report problems in their community.</p>
+            </div>
+
+            <div class="step">
+                <strong>2. Review</strong>
+                <p>Leaders and departments examine the issue.</p>
+            </div>
+
+            <div class="step">
+                <strong>3. Take Action</strong>
+                <p>Responsible teams resolve the problem.</p>
+            </div>
+
+            <div class="step">
+                <strong>4. Update Citizens</strong>
+                <p>Progress is shared transparently.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ROLES -->
+    <section class="section">
+        <h2>Who Uses It</h2>
+        <div class="roles">
+            <div class="role">Citizen</div>
+            <div class="role">Public Representative</div>
+            <div class="role">Admin</div>
+            <div class="role">Moderator</div>
+        </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section class="about">
+        <h2>About PrajaVaradhi</h2>
+        <p>Connecting citizens with leaders for transparent services.</p>
+
+        <div class="about-box">
+            <div class="about-card">
+                <h3>📷 Instagram</h3>
+                <a href="https://instagram.com/PrajaVaradhi">instagram.com/PrajaVaradhi</a>
+            </div>
+
+            <div class="about-card">
+                <h3>📍 Local Helplines</h3>
+                Hyderabad – 1800-111-101<br>
+                Bangalore – 1800-222-202<br>
+                Chennai – 1800-333-303
+            </div>
+
+            <div class="about-card">
+                <h3>☎ Official Helpline</h3>
+                <strong>1800-PEOPLE-01</strong>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- FINAL FOOTER -->
+    <div class="final-footer">
+        <p><img src="indian-flag.jpg" alt="Indian Flag"
+                style="width:30px; height:20px; vertical-align:middle; margin-right:8px;">PrajaVaradhi is the official
+            citizen-government communication platform</p>
+        <p>Government Digital Service</p>
+        <br>
+        <a href="#">Accessibility support</a>
+        <a href="#">Privacy policy</a>
+        <a href="#">Public info requests</a>
+    </div>
+
     <!-- Include API and Auth JavaScript files -->
     <script src="js/api.js"></script>
     <script src="js/auth.js"></script>
 
     <script>
-        // Check if user is logged in
-        if (!Utils.isLoggedIn()) {
-            window.location.href = "login.html";
+        function toggleInfo() {
+            let info = document.getElementById("info");
+            info.style.display = info.style.display === "block" ? "none" : "block";
         }
 
-        // Logout function
-        function handleLogout(e) {
-            e.preventDefault();
-            AuthAPI.logout();
-        }
-
-        // Display user name on load
+        // Check login status on load
+        // Check login status on load
+        /* 
+           User requested to keep Login/Signup options always visible 
+           instead of showing 'Go to Dashboard'
+        */
         document.addEventListener('DOMContentLoaded', () => {
-            const userName = localStorage.getItem('userName');
-            if (userName) {
-                document.querySelector('.hero h2').textContent = `Welcome, ${userName}`;
-            }
+            // Logic removed as per request
         });
     </script>
-</head>
-
-<body>
-
-    <!-- HEADER -->
-    <div class="header">
-        <div class="logo-box">
-            <div class="logo">PrajaVaradhi</div>
-            <img src="logo.png" class="site-logo">
-        </div>
-
-        <a href="#" class="logout" onclick="handleLogout(event)">Logout</a>
-    </div>
-
-    <!-- HERO -->
-    <section class="hero">
-        <h2>Welcome to PrajaVaradhi</h2>
-        <p>Your one platform for public services & government communication</p>
-    </section>
-
-    <!-- SERVICES -->
-    <section class="services">
-
-        <div class="service-card" onclick="location.href='raise.html'">
-            <h3>📢 Raise Request</h3>
-            <p>Report public issues easily</p>
-        </div>
-
-        <div class="service-card" onclick="location.href='budget.html'">
-            <h3>❓ Budget Enquiry</h3>
-            <p>Ask government related questions</p>
-        </div>
-
-        <div class="service-card" onclick="location.href='scheme.html'">
-            <h3>schemes</h3>
-            <p>Search rules & regulations</p>
-        </div>
-
-        <div class="service-card" onclick="location.href='track.html'">
-            <h3>📊 Track Complaints</h3>
-            <p>View issue progress</p>
-        </div>
-
-        <div class="service-card" onclick="location.href='updates.html'">
-            <h3>📰 Government Updates</h3>
-            <p>Latest announcements</p>
-        </div>
-
-        <div class="service-card" onclick="location.href='support.html'">
-            <h3>🛠 Help & Support</h3>
-            <p>Contact authorities</p>
-        </div>
-
-        <div class="service-card" onclick="location.href='feedback.html'">
-            <h3>⭐ Feedback</h3>
-            <p>Rate services</p>
-        </div>
-
-        <div class="service-card" onclick="location.href='profile.html'">
-            <h3>👤 My Profile</h3>
-            <p>Manage account</p>
-        </div>
-
-    </section>
-
-    <!-- FOOTER -->
-    <div class="footer">
-        <img src="indian-flag.jpg" alt="Indian Flag"
-            style="width:30px; height:20px; vertical-align:middle; margin-right:8px;">
-        PrajaVaradhi – Official Citizen Platform
-    </div>
-
 </body>
 
 </html>

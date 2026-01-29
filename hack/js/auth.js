@@ -123,9 +123,11 @@ async function login() {
             // Redirect based on role
             setTimeout(() => {
                 if (response.user.role === 'admin') {
-                    window.location.href = 'admin.html';
+                    window.location.href = 'publicrepresentative-dashboard.html';
+                } else if (response.user.role === 'moderator') {
+                    window.location.href = 'moderator-dashboard.html';
                 } else {
-                    window.location.href = 'index.html';
+                    window.location.href = 'citizen-dashboard.html';
                 }
             }, 1000);
         }
@@ -139,6 +141,72 @@ async function login() {
 function handleEnterKey(event) {
     if (event.key === 'Enter') {
         login();
+    }
+}
+
+// Forgot password function
+async function handleForgotPassword() {
+    const user = document.getElementById("user").value.trim();
+    if (!user) {
+        Utils.showError("Please enter your email or phone first");
+        return;
+    }
+
+    try {
+        const response = await AuthAPI.forgotPassword({ user });
+        if (response.success) {
+            // In simulation mode, we get the token back and automatically "fill" it for the user
+            // In a real app, the user would check their email.
+            Utils.showSuccess("SIMULATION: Reset token generated. Redirecting to reset page...");
+            setTimeout(() => {
+                window.location.href = `reset-password.html?token=${response.resetToken}`;
+            }, 1500);
+        }
+    } catch (error) {
+        Utils.showError(error.message || "Failed to process request");
+    }
+}
+
+// Reset password function
+async function handleResetPassword() {
+    const password = document.getElementById("new-password").value;
+    const confirmPassword = document.getElementById("confirm-password").value;
+    const resetBtn = document.querySelector('.reset-btn');
+
+    if (!password || !confirmPassword) {
+        Utils.showError("Please fill all fields");
+        return;
+    }
+
+    if (password !== confirmPassword) {
+        Utils.showError("Passwords do not match");
+        return;
+    }
+
+    // Get token from URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const token = urlParams.get('token');
+
+    if (!token) {
+        Utils.showError("Invalid or missing reset token");
+        return;
+    }
+
+    Utils.showLoading(resetBtn, 'Reset Password');
+
+    try {
+        const response = await AuthAPI.resetPassword(token, password);
+        Utils.hideLoading(resetBtn);
+
+        if (response.success) {
+            Utils.showSuccess("Password reset successful! Redirecting to login...");
+            setTimeout(() => {
+                window.location.href = "login.html";
+            }, 1500);
+        }
+    } catch (error) {
+        Utils.hideLoading(resetBtn);
+        Utils.showError(error.message || "Failed to reset password");
     }
 }
 

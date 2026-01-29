@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Help & Support | PrajaVaradhi</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: "Segoe UI", Arial, sans-serif;
+        }
+
+        body {
+            margin: 0;
+            background: #f3f5f7;
+            color: #111;
+        }
+
+        /* BRAND BAR */
+        .brand-bar {
+            background: white;
+            padding: 14px 30px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .back-btn {
+            font-size: 20px;
+            font-weight: 700;
+            color: #0f2f4f;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .brand {
+            font-size: 22px;
+            font-weight: 700;
+            color: #0f2f4f;
+        }
+
+        .brand-logo {
+            width: 38px;
+            height: 38px;
+            object-fit: contain;
+        }
+
+        /* HERO */
+        .hero {
+            background: #0f2f4f;
+            color: white;
+            padding: 70px 40px 90px;
+        }
+
+        .hero h1 {
+            font-size: 42px;
+            margin: 0;
+        }
+
+        .hero p {
+            margin-top: 10px;
+            font-size: 18px;
+            opacity: .9;
+        }
+
+        /* ACTION BAR */
+        .actions {
+            background: white;
+            max-width: 900px;
+            margin: -35px auto 60px;
+            padding: 18px;
+            display: flex;
+            justify-content: space-around;
+            border-radius: 10px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, .15);
+            font-weight: 600;
+            color: #0f2f4f;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        /* CONTACT CARDS */
+        .container {
+            max-width: 1200px;
+            margin: auto;
+            padding: 0 30px;
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .card {
+            background: white;
+            padding: 26px;
+            border-radius: 14px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, .08);
+            border-left: 5px solid #0f2f4f;
+        }
+
+        .card h3 {
+            margin-top: 0;
+            color: #0f2f4f;
+        }
+
+        /* FAQ */
+        .faq-section {
+            max-width: 1000px;
+            margin: 70px auto;
+            padding: 0 30px;
+        }
+
+        .faq-section h2 {
+            font-size: 32px;
+            margin-bottom: 30px;
+            color: #0f2f4f;
+        }
+
+        .faq-item {
+            background: white;
+            border-radius: 14px;
+            padding: 20px 26px;
+            margin-bottom: 20px;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, .08);
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .faq-item:hover {
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+        }
+
+        .faq-question {
+            font-size: 18px;
+            font-weight: 600;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .faq-answer {
+            margin-top: 14px;
+            color: #555;
+            line-height: 1.6;
+            display: none;
+        }
+
+        .faq-item.active .faq-answer {
+            display: block;
+        }
+
+        .arrow {
+            transition: .3s;
+            font-size: 14px;
+        }
+
+        .faq-item.active .arrow {
+            transform: rotate(180deg);
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- BRAND BAR -->
+    <div class="brand-bar">
+        <a href="citizen-dashboard.html" class="back-btn">«</a>
+        <div class="brand">PrajaVaradhi</div>
+        <img src="logo.png" class="brand-logo" alt="Logo">
+    </div>
+
+
+    <!-- HERO -->
+    <div class="hero">
+        <h1>Help & Support</h1>
+        <p>Find assistance, important contacts, and answers to common questions about PrajaVaradhi</p>
+    </div>
+
+    <!-- ACTION BAR -->
+    <div class="actions">
+        <div>Contact Departments</div>
+        <div>Track Complaints</div>
+        <div>Emergency Help</div>
+        <div>FAQs</div>
+    </div>
+
+    <!-- CONTACT CARDS -->
+    <div class="container">
+        <div class="cards">
+
+            <div class="card">
+                <h3>Municipality</h3>
+                <p>Phone: 040-23456789</p>
+                <p>Email: municipality@ap.gov.in</p>
+            </div>
+
+            <div class="card">
+                <h3>Electricity Department</h3>
+                <p>Helpline: 1912</p>
+                <p>Email: electricity@ap.gov.in</p>
+            </div>
+
+            <div class="card">
+                <h3>Water Supply</h3>
+                <p>Helpline: 1800-123-456</p>
+                <p>Email: watersupply@ap.gov.in</p>
+            </div>
+
+            <div class="card">
+                <h3>Emergency Services</h3>
+                <p>Police: 100</p>
+                <p>Ambulance: 108</p>
+                <p>Women Helpline: 181</p>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- FAQ -->
+    <div class="faq-section">
+        <h2>Frequently Asked Questions</h2>
+
+        <div class="faq-item">
+            <div class="faq-question">How do I raise a public issue? <span class="arrow">▼</span></div>
+            <div class="faq-answer">Go to Raise Request on your dashboard, select the issue category, fill in the
+                details with location, and submit.</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question">How can I track my complaint? <span class="arrow">▼</span></div>
+            <div class="faq-answer">Go to the "Track Complaints" section. You will see all your submitted issues and
+                their current live status.</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question">Who can see my complaint? <span class="arrow">▼</span></div>
+            <div class="faq-answer">Your complaint is first verified by a Moderator and then assigned to the relevant
+                Public Representative for your district.</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question">How long does resolution take? <span class="arrow">▼</span></div>
+            <div class="faq-answer">Resolution time depends on the priority and nature of the issue, typically ranging
+                from 3 to 15 working days.</div>
+        </div>
+
+    </div>
+
+    <script>
+        document.querySelectorAll(".faq-item").forEach(i => {
+            i.onclick = () => i.classList.toggle("active");
+        });
+    </script>
+
+</body>
+
+</html>

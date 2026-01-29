@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Approve / Escalate Requests | PrajaVaradhi</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f7fa;
+            min-height: 100vh;
+        }
+
+        .header {
+            background: #0f2742;
+            color: white;
+            padding: 15px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .back-btn {
+            color: white;
+            text-decoration: none;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .logout-btn {
+            background: #e74c3c;
+            color: white;
+            padding: 8px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, #0f2742 0%, #1a4d7a 100%);
+            color: white;
+            padding: 40px 40px;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+
+        .hero p {
+            font-size: 16px;
+            opacity: 0.9;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        .empty-state {
+            background: white;
+            border-radius: 12px;
+            padding: 60px 40px;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .empty-icon {
+            font-size: 80px;
+            margin-bottom: 20px;
+            opacity: 0.3;
+        }
+
+        .empty-title {
+            font-size: 24px;
+            color: #0f2742;
+            margin-bottom: 10px;
+        }
+
+        .empty-description {
+            color: #666;
+            font-size: 16px;
+        }
+
+        .request-card {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        .request-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .request-title {
+            font-size: 20px;
+            font-weight: bold;
+            color: #0f2742;
+            flex: 1;
+        }
+
+        .request-id {
+            background: #e3f2fd;
+            color: #1565c0;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        .request-meta {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+            font-size: 14px;
+            color: #666;
+        }
+
+        .request-description {
+            color: #555;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            padding: 15px;
+            background: #f9f9f9;
+            border-radius: 8px;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+
+        .btn-approve {
+            background: #27ae60;
+            color: white;
+        }
+
+        .btn-approve:hover {
+            background: #229954;
+        }
+
+        .btn-escalate {
+            background: #f39c12;
+            color: white;
+        }
+
+        .btn-escalate:hover {
+            background: #e67e22;
+        }
+
+        .btn-resolve {
+            background: #3498db;
+            color: white;
+        }
+
+        .btn-resolve:hover {
+            background: #2980b9;
+        }
+
+        .priority-badge {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .priority-high {
+            background: #e74c3c;
+            color: white;
+        }
+
+        .priority-medium {
+            background: #f39c12;
+            color: white;
+        }
+
+        .priority-low {
+            background: #3498db;
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <div class="logo-section">
+            <a href="publicrepresentative-dashboard.html" class="back-btn">←</a>
+            <div class="logo">PrajaVaradhi<img src="logo.png" alt="PrajaVaradhi"
+                    style="height:30px;vertical-align:middle;margin-left:10px;"></div>
+        </div>
+        <div style="display:flex;align-items:center;gap:20px;"><a href="publicrepresentative-dashboard.html"
+                style="color:white;text-decoration:none;font-weight:bold;">🏠 Dashboard</a><button class="logout-btn"
+                onclick="logout()">Logout</button></div>
+    </div>
+
+    <div class="hero">
+        <h1>✅ Approve / Escalate Requests</h1>
+        <p>Review and take action on pending citizen requests</p>
+    </div>
+
+    <div class="container">
+        <div id="requestsContainer"></div>
+    </div>
+
+    <!-- Include API -->
+    <script src="js/api.js"></script>
+
+    <script>
+        window.onload = async function () {
+            await loadPendingRequests();
+        };
+
+        async function loadPendingRequests() {
+            const container = document.getElementById('requestsContainer');
+
+            try {
+                const response = await IssueAPI.getAll();
+                const issues = response.success ? response.data : (Array.isArray(response) ? response : []);
+
+                // Filter only pending issues
+                const pendingIssues = issues.filter(issue => issue.status === 'Pending');
+
+                if (pendingIssues.length === 0) {
+                    container.innerHTML = `
+                        <div class="empty-state">
+                            <div class="empty-icon">✅</div>
+                            <div class="empty-title">No Pending Requests</div>
+                            <div class="empty-description">All citizen requests have been processed. New requests will appear here.</div>
+                        </div>
+                    `;
+                    return;
+                }
+
+                // Render pending issues
+                pendingIssues.forEach(issue => {
+                    const card = document.createElement('div');
+                    card.className = 'request-card';
+
+                    const priorityClass = `priority-${issue.priority ? issue.priority.toLowerCase() : 'medium'}`;
+
+                    card.innerHTML = `
+                        <div class="request-header">
+                            <div class="request-title">${issue.title}</div>
+                            <div style="display:flex;gap:10px;align-items:center;">
+                                <span class="priority-badge ${priorityClass}">${issue.priority || 'Medium'}</span>
+                                <span class="request-id">${issue.id}</span>
+                            </div>
+                        </div>
+                        <div class="request-meta">
+                            <span>📁 ${issue.category}</span>
+                            <span>📍 ${issue.district || issue.location}</span>
+                            <span>👤 ${issue.userName || 'Citizen'}</span>
+                            <span>📅 ${issue.date || new Date(issue.createdAt).toLocaleDateString()}</span>
+                        </div>
+                        <div class="request-description">${issue.details}</div>
+                        <div class="action-buttons">
+                            <button class="btn btn-approve" onclick="updateIssueStatus('${issue._id}', 'In Action')">✓ Approve & Start Action</button>
+                            <button class="btn btn-resolve" onclick="updateIssueStatus('${issue._id}', 'Resolved')">✓ Mark as Resolved</button>
+                        </div>
+                    `;
+
+                    container.appendChild(card);
+                });
+
+            } catch (error) {
+                console.error('Error loading requests:', error);
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-icon">⚠️</div>
+                        <div class="empty-title">Error Loading Requests</div>
+                        <div class="empty-description">Please check server connection and try again.</div>
+                    </div>
+                `;
+            }
+        }
+
+        async function updateIssueStatus(issueId, newStatus) {
+            try {
+                await IssueAPI.update(issueId, { status: newStatus });
+                alert(`✅ Issue status updated to: ${newStatus}`);
+                location.reload(); // Refresh to show updated list
+            } catch (error) {
+                alert('❌ Failed to update issue status');
+                console.error(error);
+            }
+        }
+
+        function logout() {
+            localStorage.clear();
+            window.location.href = 'login.html';
+        }
+    </script>
+
+</body>
+
+</html>

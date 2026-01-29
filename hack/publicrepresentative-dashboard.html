@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Public Representative Dashboard | PrajaVaradhi</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f7fa;
+            min-height: 100vh;
+        }
+
+        /* Header */
+        .header {
+            background: #0f2742;
+            color: white;
+            padding: 15px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .back-btn {
+            color: white;
+            text-decoration: none;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .admin-switch {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 8px 15px;
+            border-radius: 5px;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        .logout-btn {
+            background: #e74c3c;
+            color: white;
+            padding: 8px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #0f2742 0%, #1a4d7a 100%);
+            color: white;
+            padding: 60px 40px;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 36px;
+            margin-bottom: 10px;
+        }
+
+        .hero p {
+            font-size: 18px;
+            opacity: 0.9;
+        }
+
+        /* Main Content */
+        .container {
+            max-width: 1200px;
+            margin: -40px auto 40px;
+            padding: 0 20px;
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .dashboard-card {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+
+        .dashboard-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .card-icon {
+            font-size: 48px;
+            margin-bottom: 15px;
+        }
+
+        .card-title {
+            font-size: 20px;
+            font-weight: bold;
+            color: #0f2742;
+            margin-bottom: 10px;
+        }
+
+        .card-description {
+            color: #666;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .card-badge {
+            display: inline-block;
+            background: #0f2742;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Header -->
+    <div class="header">
+        <div class="logo-section">
+            <div class="logo">PrajaVaradhi<img src="logo.png" alt="PrajaVaradhi"
+                    style="height:30px;vertical-align:middle;margin-left:10px;"></div>
+        </div>
+        <div class="header-right">
+            <a href="publicrepresentative-dashboard.html"
+                style="color:white;text-decoration:none;margin-right:20px;font-weight:bold;">🏠 Dashboard</a>
+            <button class="logout-btn" onclick="logout()">Logout</button>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <div class="hero">
+        <h1>Public Representative Dashboard</h1>
+        <p>Manage constituency, track issues, and serve the public effectively</p>
+    </div>
+
+    <!-- Dashboard Cards -->
+    <div class="container">
+        <div class="dashboard-grid">
+
+            <a href="publicrepresentative-issues.html" class="dashboard-card">
+                <div class="card-icon">📋</div>
+                <div class="card-title">Public Issues Dashboard</div>
+                <div class="card-description">View and manage citizen complaints by area, category, and priority</div>
+                <span class="card-badge" id="totalIssues">Loading...</span>
+            </a>
+
+            <a href="publicrepresentative-approve.html" class="dashboard-card">
+                <div class="card-icon">✅</div>
+                <div class="card-title">Approve / Escalate Requests</div>
+                <div class="card-description">Review pending requests and take action on citizen complaints</div>
+                <span class="card-badge" id="pendingIssues">Loading...</span>
+            </a>
+
+            <a href="publicrepresentative-constituency.html" class="dashboard-card">
+                <div class="card-icon">📊</div>
+                <div class="card-title">Constituency Overview</div>
+                <div class="card-description">Summary of complaints, resolved issues, and problem areas</div>
+                <span class="card-badge" id="resolvedIssues">Loading...</span>
+            </a>
+
+            <a href="publicrepresentative-schemes.html" class="dashboard-card">
+                <div class="card-icon">🎯</div>
+                <div class="card-title">Government Schemes Monitor</div>
+                <div class="card-description">Track scheme implementation, beneficiaries, and feedback</div>
+                <span class="card-badge" style="background:#27ae60;">✓ Updated</span>
+            </a>
+
+            <a href="publicrepresentative-budget.html" class="dashboard-card">
+                <div class="card-icon">💰</div>
+                <div class="card-title">Budget & Development Works</div>
+                <div class="card-description">Monitor projects, fund allocation, and development progress</div>
+                <span class="card-badge">Coming Soon</span>
+            </a>
+
+            <a href="publicrepresentative-announcements.html" class="dashboard-card">
+                <div class="card-icon">📢</div>
+                <div class="card-title">Announcements & Messages</div>
+                <div class="card-description">Create and manage public announcements and updates</div>
+                <span class="card-badge">Coming Soon</span>
+            </a>
+
+            <a href="publicrepresentative-feedback.html" class="dashboard-card">
+                <div class="card-icon">💬</div>
+                <div class="card-title">Public Feedback & Sentiment</div>
+                <div class="card-description">View citizen feedback, ratings, and sentiment analysis</div>
+                <span class="card-badge">Coming Soon</span>
+            </a>
+
+            <a href="publicrepresentative-profile.html" class="dashboard-card">
+                <div class="card-icon">👤</div>
+                <div class="card-title">Profile & Accountability</div>
+                <div class="card-description">Your profile, achievements, and promise tracking</div>
+                <span class="card-badge">Coming Soon</span>
+            </a>
+
+        </div>
+    </div>
+
+    <!-- Include API -->
+    <script src="js/api.js"></script>
+
+    <script>
+        // Check user role and load stats
+        window.onload = async function () {
+            const role = localStorage.getItem('role');
+
+            // Redirect citizens
+            if (role === 'citizen') {
+                alert('Access Denied: This area is for public representatives only');
+                window.location.href = 'citizen-dashboard.html';
+                return;
+            }
+
+            // Set user info
+            const userName = localStorage.getItem('userName') || 'Representative';
+            console.log('Logged in as:', userName);
+
+            // Load real statistics
+            await loadDashboardStats();
+        };
+
+        // Load dashboard statistics from API
+        async function loadDashboardStats() {
+            try {
+                const response = await IssueAPI.getAll();
+                const issues = response.success ? response.data : (Array.isArray(response) ? response : []);
+
+                // Calculate statistics
+                const totalCount = issues.length;
+                const pendingCount = issues.filter(issue => issue.status === 'Pending').length;
+                const resolvedCount = issues.filter(issue => issue.status === 'Resolved').length;
+
+                // Update badges with real counts
+                document.getElementById('totalIssues').textContent = `${totalCount} Total`;
+                document.getElementById('pendingIssues').textContent = `${pendingCount} Pending`;
+                document.getElementById('resolvedIssues').textContent = `${resolvedCount} Resolved`;
+
+            } catch (error) {
+                console.error('Error loading dashboard stats:', error);
+                document.getElementById('totalIssues').textContent = '0 Total';
+                document.getElementById('pendingIssues').textContent = '0 Pending';
+                document.getElementById('resolvedIssues').textContent = '0 Resolved';
+            }
+        }
+
+        // Logout function
+        function logout() {
+            localStorage.clear();
+            window.location.href = 'login.html';
+        }
+    </script>
+
+</body>
+
+</html>

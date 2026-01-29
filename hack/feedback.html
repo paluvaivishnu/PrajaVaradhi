@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Feedback | PrajaVaradhi</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: "Segoe UI", Arial, sans-serif;
+        }
+
+        body {
+            margin: 0;
+            background: #f4f7fb;
+        }
+
+        /* BRAND BAR */
+        .brand-bar {
+            background: white;
+            padding: 14px 30px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            box-shadow: 0 1px 6px rgba(0, 0, 0, .08);
+        }
+
+        .back-btn {
+            font-size: 24px;
+            font-weight: 700;
+            color: #0f2f4f;
+            text-decoration: none;
+        }
+
+        .brand {
+            font-size: 26px;
+            font-weight: 700;
+            color: #0f2f4f;
+        }
+
+        .brand-logo {
+            width: 46px;
+            height: 46px;
+            object-fit: contain;
+        }
+
+        /* HERO */
+        .hero {
+            background: #0f2f4f;
+            color: white;
+            padding: 80px 60px 110px;
+        }
+
+        .hero h1 {
+            font-size: 42px;
+            margin: 0;
+        }
+
+        .hero p {
+            margin-top: 12px;
+            font-size: 18px;
+            opacity: .9;
+        }
+
+        /* FLOAT BAR */
+        .tabs {
+            background: white;
+            max-width: 900px;
+            margin: -40px auto 70px;
+            padding: 18px;
+            display: flex;
+            justify-content: center;
+            border-radius: 12px;
+            box-shadow: 0 10px 28px rgba(0, 0, 0, .15);
+            font-weight: 600;
+            color: #0f2f4f;
+        }
+
+        /* CONTENT */
+        .container {
+            max-width: 1100px;
+            margin: auto;
+            padding: 0 40px;
+        }
+
+        /* CARD */
+        .card {
+            background: white;
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: 0 8px 22px rgba(0, 0, 0, .08);
+            margin-bottom: 35px;
+        }
+
+        .card h3 {
+            margin-top: 0;
+            color: #0f2f4f;
+        }
+
+        /* STARS */
+        .stars {
+            display: flex;
+            gap: 12px;
+            font-size: 28px;
+            cursor: pointer;
+        }
+
+        .star {
+            color: #ccc;
+        }
+
+        .star.active {
+            color: #fbbf24;
+        }
+
+        /* QUESTIONS */
+        .question {
+            margin-bottom: 20px;
+        }
+
+        /* TEXTAREA */
+        textarea {
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+        }
+
+        /* BUTTON */
+        button {
+            margin-top: 20px;
+            padding: 10px 28px;
+            background: #0f2f4f;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        button:hover {
+            background: #1a4d7a;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- BRAND BAR -->
+    <div class="brand-bar">
+        <a href="citizen-dashboard.html" class="back-btn">«</a>
+        <div class="brand">PrajaVaradhi</div>
+        <img src="logo.png" class="brand-logo" alt="Logo">
+    </div>
+
+    <!-- HERO -->
+    <div class="hero">
+        <h1>Feedback</h1>
+        <p>Share your experience to help us improve PrajaVaradhi</p>
+    </div>
+
+    <!-- FLOAT BAR -->
+    <div class="tabs">
+        Your Opinion Matters
+    </div>
+
+    <!-- CONTENT -->
+    <div class="container">
+
+        <div class="card">
+            <h3>💬 Why Your Feedback Matters</h3>
+            <p>Your feedback improves transparency and service quality across the state.</p>
+            <p style="font-weight:bold;color:#0f2f4f;">🔒 All responses are confidential.</p>
+        </div>
+
+        <div class="card">
+            <h3>⭐ Rate Our Services</h3>
+
+            <div class="stars">
+                <span class="star" onclick="rate(1)">★</span>
+                <span class="star" onclick="rate(2)">★</span>
+                <span class="star" onclick="rate(3)">★</span>
+                <span class="star" onclick="rate(4)">★</span>
+                <span class="star" onclick="rate(5)">★</span>
+            </div>
+
+            <button onclick="submitRating()">Submit Rating</button>
+        </div>
+
+        <div class="card">
+
+            <h3>📝 Experience Questions</h3>
+
+            <div class="question">
+                Was your issue resolved on time?<br>
+                <input type="radio" name="q1" value="yes"> Yes
+                <input type="radio" name="q1" value="no"> No
+            </div>
+
+            <div class="question">
+                Was PrajaVaradhi easy to use?<br>
+                <input type="radio" name="q2" value="yes"> Yes
+                <input type="radio" name="q2" value="no"> No
+            </div>
+
+            <div class="question">Any suggestions?</div>
+            <textarea id="suggestions" rows="4" placeholder="Enter your suggestions here..."></textarea>
+
+            <button onclick="submitFeedback()">Submit Feedback</button>
+
+        </div>
+
+    </div>
+
+    <!-- Include API and Auth JS -->
+    <script src="js/api.js"></script>
+    <script src="js/auth.js"></script>
+
+    <script>
+        let rating = 0;
+        function rate(v) {
+            rating = v;
+            document.querySelectorAll(".star").forEach((s, i) => {
+                s.classList.toggle("active", i < v);
+            });
+        }
+
+        function submitRating() {
+            if (rating === 0) {
+                alert("Please select a star rating first.");
+                return;
+            }
+            alert(`Thank you for rating us ${rating} stars!`);
+        }
+
+        function submitFeedback() {
+            const suggestions = document.getElementById('suggestions').value.trim();
+            // Basic UI simulation for now
+            alert("Thank you for your feedback! Your suggestions have been received.");
+            window.location.href = 'citizen-dashboard.html';
+        }
+    </script>
+
+</body>
+
+</html>

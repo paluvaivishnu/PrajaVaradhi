@@ -193,3 +193,83 @@ exports.getMe = async (req, res) => {
         });
     }
 };
+// @desc    Forgot password
+// @route   POST /api/auth/forgotpassword
+// @access  Public
+exports.forgotPassword = async (req, res) => {
+    try {
+        const { user: identifier } = req.body;
+
+        const user = await User.findOne({ $or: [{ email: identifier }, { phone: identifier }] });
+
+        if (!user) {
+            return res.status(404).json({
+                success: false,
+                message: 'No user found with that email/phone'
+            });
+        }
+
+        // Generate reset token (simple random string for this hack)
+        const resetToken = Math.random().toString(36).substring(2, 12);
+
+        // Hash and set to resetPasswordToken field
+        user.resetPasswordToken = resetToken;
+        // set expire to 10 mins
+        user.resetPasswordExpire = Date.now() + 10 * 60 * 1000;
+
+        await user.save({ validateBeforeSave: false });
+
+        // In a real app, send email here. For now, we return it in response for simulation.
+        res.status(200).json({
+            success: true,
+            message: 'Password reset token generated (Simulated)',
+            resetToken // Returning this so we can pretend we got it from email
+        });
+
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: error.message
+        });
+    }
+};
+
+// @desc    Reset password
+// @route   PUT /api/auth/resetpassword/:resettoken
+// @access  Public
+exports.resetPassword = async (req, res) => {
+    try {
+        const { password } = req.body;
+        const resetToken = req.params.resettoken;
+
+        const user = await User.findOne({
+            resetPasswordToken: resetToken,
+            resetPasswordExpire: { $gt: Date.now() }
+        });
+
+        if (!user) {
+            return res.status(400).json({
+                success: false,
+                message: 'Invalid or expired reset token'
+            });
+        }
+
+        // Set new password
+        user.password = password;
+        user.resetPasswordToken = undefined;
+        user.resetPasswordExpire = undefined;
+
+        await user.save();
+
+        res.status(200).json({
+            success: true,
+            message: 'Password updated successfully'
+        });
+
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: error.message
+        });
+    }
+};

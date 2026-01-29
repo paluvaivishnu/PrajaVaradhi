@@ -53,6 +53,16 @@ const AuthAPI = {
         return await apiCall('/auth/me', 'GET');
     },
 
+    // Forgot password
+    async forgotPassword(data) {
+        return await apiCall('/auth/forgotpassword', 'POST', data);
+    },
+
+    // Reset password
+    async resetPassword(token, password) {
+        return await apiCall(`/auth/resetpassword/${token}`, 'PUT', { password });
+    },
+
     // Logout
     logout() {
         localStorage.removeItem('authToken');
@@ -62,7 +72,7 @@ const AuthAPI = {
         localStorage.removeItem('userPhone');
         localStorage.removeItem('userId');
         localStorage.removeItem('role');
-        window.location.href = 'home.html';
+        window.location.href = 'index.html';
     }
 };
 
@@ -96,6 +106,11 @@ const IssueAPI = {
     // Get user's issues
     async getUserIssues(userId) {
         return await apiCall(`/issues/user/${userId}`, 'GET');
+    },
+
+    // Add progress update to issue
+    async addProgress(id, progressData) {
+        return await apiCall(`/issues/${id}/progress`, 'POST', progressData);
     }
 };
 

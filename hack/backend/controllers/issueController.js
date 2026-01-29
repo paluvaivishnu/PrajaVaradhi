@@ -7,9 +7,14 @@ exports.getAllIssues = async (req, res) => {
     try {
         let query = {};
 
-        // If user is authenticated and is a district admin, filter by their district
-        if (req.user && req.user.role === 'admin' && req.user.district) {
-            query.district = req.user.district;
+        // If user is a district admin (Public Representative), only show verified, non-duplicate issues
+        if (req.user && req.user.role === 'admin') {
+            query.isVerified = true;
+            query.isDuplicate = false;
+
+            if (req.user.district) {
+                query.district = req.user.district;
+            }
         }
 
         const issues = await Issue.find(query).populate('userId', 'name email').sort({ createdAt: -1 });
@@ -179,3 +184,89 @@ exports.updateIssue = async (req, res) => {
     }
 };
 
+// @desc    Add progress update to an issue
+// @route   POST /api/issues/:id/progress
+// @access  Private (admin only)
+exports.addProgressUpdate = async (req, res) => {
+    try {
+        const { comment, photo } = req.body;
+
+        if (!comment) {
+            return res.status(400).json({
+                success: false,
+                message: 'Comment is required'
+            });
+        }
+
+        const issue = await Issue.findById(req.params.id);
+
+        if (!issue) {
+            return res.status(404).json({
+                success: false,
+                message: 'Issue not found'
+            });
+        }
+
+        // Add progress update
+        const progressUpdate = {
+            comment,
+            photo: photo || '',
+            updatedBy: req.user.name || 'Public Representative',
+            updatedAt: new Date()
+        };
+
+        issue.progressUpdates.push(progressUpdate);
+        await issue.save();
+
+        res.status(200).json({
+            success: true,
+            message: 'Progress update added successfully',
+            data: issue
+        });
+
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: error.message
+        });
+    }
+};
+// @desc    Verify or mark issue as duplicate (Moderator)
+// @route   PUT /api/issues/:id/verify
+// @access  Private (Moderator)
+exports.verifyIssue = async (req, res) => {
+    try {
+        const { isVerified, moderatorNotes, isDuplicate, duplicateOf } = req.body;
+
+        const issue = await Issue.findById(req.params.id);
+
+        if (!issue) {
+            return res.status(404).json({
+                success: false,
+                message: 'Issue not found'
+            });
+        }
+
+        // Update verification fields
+        issue.isVerified = isVerified !== undefined ? isVerified : issue.isVerified;
+        issue.moderatorNotes = moderatorNotes !== undefined ? moderatorNotes : issue.moderatorNotes;
+        issue.isDuplicate = isDuplicate !== undefined ? isDuplicate : issue.isDuplicate;
+        issue.duplicateOf = duplicateOf !== undefined ? duplicateOf : issue.duplicateOf;
+        issue.verifiedBy = req.user._id;
+        issue.verifiedDate = Date.now();
+
+        await issue.save();
+
+        res.status(200).json({
+            success: true,
+            message: 'Issue verification updated',
+            data: issue
+        });
+
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: error.message
+        });
+    }
+};
